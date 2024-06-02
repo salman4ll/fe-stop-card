@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect, useCallback } from "react";
 import { signOut, useSession } from "next-auth/react";
 import Table from "@/components/Table";
@@ -29,9 +29,17 @@ const KaryawanInsiden: React.FC = () => {
     setStatus(e.target.value);
   };
 
-  const renderButtons = (insiden: Insiden) => [    
-    <DeleteInsiden key={insiden.id_incident} insiden={insiden} onUpdate={fetchData} />,
-    <UpdateIncident key={insiden.id_incident} incident={insiden} onUpdate={fetchData} />,
+  const renderButtons = (insiden: Insiden) => [
+    <DeleteInsiden
+      key={insiden.id_incident}
+      insiden={insiden}
+      onUpdate={fetchData}
+    />,
+    <UpdateIncident
+      key={insiden.id_incident}
+      incident={insiden}
+      onUpdate={fetchData}
+    />,
   ];
 
   const fetchData = useCallback(async () => {
@@ -57,15 +65,20 @@ const KaryawanInsiden: React.FC = () => {
         console.error("Error fetching data:", result.message);
         setData([]);
         if (response.status === 401) {
-            // Clear the session if the token is unauthorized
-            signOut();
-          }
+          // Clear the session if the token is unauthorized
+          signOut();
+        }
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      if (error instanceof Error) {
+        console.error("Error fetching data:", error.message);
+        if (error.message.includes("CORS")) {
+          // Clear the session if there's a CORS error
+          signOut();
+        }
+      }
     }
   }, [search, category, status, page, session?.access_token, renderButtons]);
-
 
   useEffect(() => {
     if (session) {
@@ -101,7 +114,7 @@ const KaryawanInsiden: React.FC = () => {
     <Card title="Data Insiden" topMargin="mt-2" TopSideButtons={undefined}>
       <div className="inline-block w-full mb-3">
         <div className="mb-3">
-        <AddIncident onUpdate={fetchData} />
+          <AddIncident onUpdate={fetchData} />
         </div>
         <div className="flex justify-between items-center w-full">
           <div className="flex items-center gap-3">
