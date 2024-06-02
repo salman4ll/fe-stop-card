@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect, useCallback } from "react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Table from "@/components/Table";
 import Card from "@/components/Card";
 import DefaultPagination from "@/components/Pagination";
@@ -56,6 +56,10 @@ const KaryawanInsiden: React.FC = () => {
       } else {
         console.error("Error fetching data:", result.message);
         setData([]);
+        if (response.status === 401) {
+            // Clear the session if the token is unauthorized
+            signOut();
+          }
       }
     } catch (error) {
       console.error("Error fetching data:", error);

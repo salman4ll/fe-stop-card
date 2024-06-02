@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Table from "@/components/Table";
 import DeleteUser from "@/components/admin/DeleteUser";
 import Card from "@/components/Card";
@@ -39,6 +39,10 @@ export default function AdminAdmin() {
       } else {
         console.error("Error fetching data:", result.message);
         setData([]);
+        if (response.status === 401) {
+          // Clear the session if the token is unauthorized
+          signOut();
+        }
       }
     } catch (error) {
       console.error("Error fetching data:", error);
