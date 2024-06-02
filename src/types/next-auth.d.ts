@@ -30,6 +30,7 @@ declare module "next-auth" {
         };
     }
     interface SignInResponse {
+        message: string | null;
         error: string | null;
         status: number;
         ok: boolean;
