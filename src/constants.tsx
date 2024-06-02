@@ -47,39 +47,26 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
 export const SIDENAV_ITEMS_USER: SideNavItem[] = [
   {
     title: "Home",
-    path: "/user",
+    path: "/karyawan",
     icon: <Icon icon="lucide:pie-chart" width="24" height="24" />,
   },
   {
-    title: "Data Bank",
-    path: "/user/data-bank",
-    icon: <Icon icon="ph:bank" width="24" height="24" />,
+    title: "Laporan Insiden",
+    path: "/karyawan/laporan",
+    icon: <Icon icon="carbon:event-incident" width="24" height="24" />,
   },
   {
-    title: "Harga Sampah",
-    path: "/user/harga-sampah",
-    icon: <Icon icon="fluent:money-24-regular" width="24" height="24" />,
-  },
-  {
-    title: "Tarik",
-    path: "/user/penarikan",
-    icon: <Icon icon="fluent:money-hand-24-regular" width="24" height="24" />,
-  },
-  {
-    title: "Riwayat Transaksi",
-    path: "/user/riwayat",
-    icon: (
-      <Icon
-        icon="fluent:document-bullet-list-24-regular"
-        width="24"
-        height="24"
-      />
-    ),
+    title: "Profile",
+    path: "/karyawan/profile",
+    icon: <Icon icon="tdesign:user-setting" width="24" height="24" />,
   },
   {
     title: "Logout",
-    path: "/login",
+    path: "/",
     icon: <Icon icon="lucide:log-out" width="24" height="24" />,
+    onClick: () => {
+      signOut();
+    },
     // onClick: () => {
     //   console.log("logout");
 

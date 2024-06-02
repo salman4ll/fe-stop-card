@@ -34,6 +34,7 @@ export interface Location{
 
 export interface Insiden {
     id_incident: string;
+    id_location: string;
     title: string;
     description: string;
     location_name: string;
