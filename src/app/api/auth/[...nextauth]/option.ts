@@ -30,10 +30,8 @@ export const options: NextAuthOptions = {
         const user = await res.json();
         if (user?.code === 200 && user?.data?.access_token) {
           return user?.data;
-        } else {
-          return Promise.resolve(null);
         }
-        
+          throw new Error(user?.status);
       },
     }),
   ],
@@ -43,10 +41,7 @@ export const options: NextAuthOptions = {
     },
     async session({ session, token, user }) {
       session = { ...session, ...token, ...user };
-      if (!user || !token){
-        return {...session, error: "Invalid credentials"};
-      }
-      return session;
+      return session;      
     },
   },
 };
