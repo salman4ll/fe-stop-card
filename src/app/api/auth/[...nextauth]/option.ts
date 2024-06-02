@@ -31,7 +31,7 @@ export const options: NextAuthOptions = {
         if (user?.code === 200 && user?.data?.access_token) {
           return user?.data;
         }
-          throw new Error(user?.status);
+          throw new Error(user?.message);
       },
     }),
   ],
