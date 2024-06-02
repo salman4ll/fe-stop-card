@@ -1,112 +1,244 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
+import imgBg from "@/assets/bg.jpg";
+import logo from "@/assets/logo.png"
+// import googleLogo from "@/assets/images/googleLogo.png";
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+import Link from "next/link";
+import { Icon } from "@iconify/react";
+import { signIn, useSession } from "next-auth/react";
+import { Spinner, useToast } from "@chakra-ui/react";
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+  const [formValues, setFormValues] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const toast = useToast();
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError("");
+      }, 1000);
+    }
+  }, [formValues, error]);
+
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return (
+      <div className="flex w-full mx-auto justify-center items-center h-screen">
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
         />
       </div>
+    );
+  }
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+  if (status === "authenticated") {
+    if (session?.user?.role === "karyawan") {
+      router.push("/karyawan");
+      return (
+        <div className="flex w-full mx-auto justify-center items-center h-screen">
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+        </div>
+      );
+    } else if (session?.user?.role === "admin") {
+      router.push("/admin");
+      return (
+        <div className="flex w-full mx-auto justify-center items-center h-screen">
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+        </div>
+      );
+    }
+  }
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
+    try {
+      setLoading(true);
+      setFormValues({
+        email: formValues.email,
+        password: "",
+      });
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      const res = await signIn("credentials", {
+        redirect: false,
+        email: formValues.email,
+        password: formValues.password,
+      });
+      setLoading(false);
+
+      if (res?.error) {
+        setError(res.error);
+        toast({
+          title: "Error",
+          description: res.error,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
+        return;
+      } else {
+        toast({
+          title: "Success",
+          description: "Login success",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
+
+        setTimeout(() => {
+          if (session?.user?.role === "karyawan") {
+            router.push("/karyawan");
+          } else if (session?.user?.role === "admin") {
+            router.push("/admin");
+          }
+        }, 3000);
+      }
+    } catch (error: any) {
+      setLoading(false);
+      setError(error);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValues({
+      ...formValues,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  return (
+    <main className="relative h-screen w-full flex flex-col">
+      <Image
+        alt="image background"
+        src={imgBg}
+        quality={100}
+        fill
+        sizes="100vw"
+        style={{
+          objectFit: "cover",
+        }}
+      />
+      <div className="w-[90%] p-6 m-auto bg-white rounded-[10px] lg:max-w-lg z-10">
+        <div className="w-full text-center">
+          <Image
+            alt="logo ambis kerja"
+            src={logo}
+            width={1000}
+            className="w-24 m-auto"
+          />
+          <h1 className="text-2xl font-medium mt-5">Log In</h1>
+          <div className="flex justify-center text-xs md:text-base">
+            <p className="font-normal mr-1">Dont have an account? </p>
+            <Link href="/register" className="underline">
+              Sign up
+            </Link>{" "}
+          </div>
+        </div>
+        <div className="w-[90%] md:w-[80%] m-auto mt-8 md:mt-10">
+          <div className="flex mt-6 items-center">
+            <hr className="w-[100%] mr-3 border-[1px]" />
+            <p className="font-bold text-xl text-[#666666]">OR</p>
+            <hr className="w-[100%] ml-3 border-[1px]" />
+          </div>
+          <div>
+            <form onSubmit={onSubmit} className="mt-4">
+              <div className="mb-6">
+                <label
+                  htmlFor="email"
+                  className="text-[#666666] text-md font-normal"
+                >
+                  Your Email
+                </label>
+                <input
+                  className="appearance-none border rounded-lg w-full py-3 px-3 mt-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="email"
+                  type="email"
+                  placeholder="example@gmail.com"
+                  name="email"
+                  value={formValues.email}
+                  onChange={handleChange}
+                ></input>
+              </div>
+              <div>
+                <div className="flex justify-between">
+                  <label
+                    htmlFor="password"
+                    className="text-[#666666] text-md font-normal"
+                  >
+                    Your Password
+                  </label>
+
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    className="focus:outline-none flex items-center"
+                  >
+                    <Icon
+                      icon={showPassword ? "ri:eye-off-fill" : "ri:eye-fill"}
+                      className="text-[#666666] mr-1"
+                    />
+                    <p className="text-[#666666]">
+                      {showPassword ? "Hide" : "Show"}
+                    </p>
+                  </button>
+                </div>
+                <input
+                  className="appearance-none border rounded-lg w-full py-3 px-3 mt-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="******"
+                  name="password"
+                  value={formValues.password}
+                  onChange={handleChange}
+                />
+              </div>
+              <Link
+                href="#"
+                className="flex justify-end text-[14px] mt-2 underline"
+              >
+                Forget your password
+              </Link>
+              <button
+                type="submit"
+                className="w-full flex justify-center bg-[#B2B2B2] hover:bg-[#666666] text-white rounded-[40px] py-3 mt-6"
+              >
+                Log In
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     </main>
   );
