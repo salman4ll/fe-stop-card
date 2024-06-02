@@ -23,7 +23,7 @@ export default function AddAdmin({ title, onUpdate }: AddAdminProps) {
 
     setIsMutating(true);
 
-    const response = await fetch("http://147.139.168.152/api/addAdmin", {
+    const response = await fetch("https://www.salman4l.my.id/api/addAdmin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

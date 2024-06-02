@@ -20,7 +20,7 @@ export default function AddLokasi({ title, onUpdate }: AddLocationProps) {
 
     setIsMutating(true);
 
-    const response = await fetch("http://147.139.168.152/api/locations", {
+    const response = await fetch("https://www.salman4l.my.id/api/locations", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

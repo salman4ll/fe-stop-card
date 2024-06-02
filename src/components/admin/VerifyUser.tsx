@@ -23,7 +23,7 @@ export default function VerifyUser({ user, onUpdate }: VerifyUserProps) {
 
   async function handleVerify(userId: string) {
     setIsMutating(true);
-    await fetch(`http://147.139.168.152/api/verifyUser/${userId}`, {
+    await fetch(`https://www.salman4l.my.id/api/verifyUser/${userId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

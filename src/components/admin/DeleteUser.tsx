@@ -16,7 +16,7 @@ export default function DeleteUser({ user, onUpdate }: DeleteUserProps) {
 
   async function handleDelete(userId: string) {
     setIsMutating(true);
-    await fetch(`http://147.139.168.152/api/user/${userId}`, {
+    await fetch(`https://www.salman4l.my.id/api/user/${userId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

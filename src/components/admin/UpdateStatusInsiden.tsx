@@ -26,7 +26,7 @@ export default function UpdateStatusInsiden({
     setIsMutating(true);
 
     const response = await fetch(
-      `http://147.139.168.152/api/incidents/${insiden.id_incident}`,
+      `https://www.salman4l.my.id/api/incidents/${insiden.id_incident}`,
       {
         method: "PATCH",
         headers: {

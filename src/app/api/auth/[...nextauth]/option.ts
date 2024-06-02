@@ -17,7 +17,7 @@ export const options: NextAuthOptions = {
       },
       async authorize(credentials, req) {
         const res = await fetch(
-          `http://147.139.168.152/api/login`,
+          `http://salman4l.my.id/api/login`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },

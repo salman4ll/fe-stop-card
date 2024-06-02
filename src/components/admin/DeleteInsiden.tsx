@@ -16,7 +16,7 @@ export default function DeleteInsiden({ insiden, onUpdate }: DeleteInsidenProps)
 
   async function handleDelete(InsidenId: string) {
     setIsMutating(true);
-    await fetch(`http://147.139.168.152/api/incident/${InsidenId}`, {
+    await fetch(`https://www.salman4l.my.id/api/incident/${InsidenId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

@@ -24,7 +24,7 @@ export default function AdminVisitor() {
   const fetchData = useCallback(async () => {
     try {
       const response = await fetch(
-        `http://147.139.168.152/api/user/visitor?verify=${verify}&search=${search}&page=${page}`,
+        `https://www.salman4l.my.id/api/user/visitor?verify=${verify}&search=${search}&page=${page}`,
         {
           method: "GET",
           headers: {

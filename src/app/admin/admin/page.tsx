@@ -20,7 +20,7 @@ export default function AdminAdmin() {
   const fetchData = useCallback(async () => {
     try {
       const response = await fetch(
-        `http://147.139.168.152/api/user/admin?search=${search}&page=${page}`,
+        `https://www.salman4l.my.id/api/user/admin?search=${search}&page=${page}`,
         {
           method: "GET",
           headers: {

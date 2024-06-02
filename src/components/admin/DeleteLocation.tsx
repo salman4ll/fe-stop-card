@@ -16,7 +16,7 @@ export default function DeleteLocation({ location, onUpdate }: DeleteLocationPro
 
   async function handleDelete(locationId: string) {
     setIsMutating(true);
-    await fetch(`http://147.139.168.152/api/locations/${locationId}`, {
+    await fetch(`https://www.salman4l.my.id/api/locations/${locationId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

@@ -22,7 +22,7 @@ export default function UpdateLokasi({ location, onUpdate }: UpdateLocationProps
 
     setIsMutating(true);
 
-    const response = await fetch(`http://147.139.168.152/api/locations/${location.id_location}`, {
+    const response = await fetch(`https://www.salman4l.my.id/api/locations/${location.id_location}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

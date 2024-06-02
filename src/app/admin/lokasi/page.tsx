@@ -20,7 +20,7 @@ export default function AdminLokasi() {
   const fetchData = useCallback(async () => {
     try {
       const response = await fetch(
-        `http://147.139.168.152/api/locations?search=${search}&page=${page}`,
+        `https://www.salman4l.my.id/api/locations?search=${search}&page=${page}`,
         {
           method: "GET",
           headers: {

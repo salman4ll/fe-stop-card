@@ -30,7 +30,7 @@ const AdminInsident: React.FC = () => {
   const fetchData = useCallback(async () => {
     try {
       const response = await fetch(
-        `http://147.139.168.152/api/incidents?category=${category}&status=${status}&search=${search}&page=${page}`,
+        `https://www.salman4l.my.id/api/incidents?category=${category}&status=${status}&search=${search}&page=${page}`,
         {
           method: "GET",
           headers: {
