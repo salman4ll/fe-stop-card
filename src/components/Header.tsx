@@ -32,7 +32,7 @@ const Header = (currentUser: any) => {
             <Image src={logo} alt="" className="h-[31.7px] w-[50px]"/>            
           </Link>
           <Link
-          href="/"
+          href="https://www.darya-varia.com/"
           className="flex flex-row space-x-3 items-center justify-center hover:text-cyan-600">Kembali ke website
           </Link>
         </div>

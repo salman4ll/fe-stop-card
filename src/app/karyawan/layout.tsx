@@ -9,6 +9,7 @@ import HeaderMobile from "@/components/HeaderMobile";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { ChakraProvider } from "@chakra-ui/react";
+import HeaderMobileUser from "@/components/HeaderMobileUser";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -60,7 +61,7 @@ export default function RootLayout({
           <SideNav />
           <MarginWidthWrapper>
             <Header currentUser={session?.user}/>
-            <HeaderMobile />
+            <HeaderMobileUser />
             <ChakraProvider>
               <PageWrapper>{children}</PageWrapper>
             </ChakraProvider>
