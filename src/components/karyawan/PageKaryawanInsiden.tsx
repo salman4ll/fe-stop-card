@@ -64,19 +64,11 @@ const KaryawanInsiden: React.FC = () => {
       } else {
         console.error("Error fetching data:", result.message);
         setData([]);
-        if (response.status === 401) {
-          // Clear the session if the token is unauthorized
-          signOut();
-        }
+        signOut();
       }
     } catch (error) {
-      if (error instanceof Error) {
-        console.error("Error fetching data:", error.message);
-        if (error.message.includes("CORS")) {
-          // Clear the session if there's a CORS error
-          signOut();
-        }
-      }
+      console.error("Error fetching data:", error);
+      signOut();
     }
   }, [search, category, status, page, session?.access_token, renderButtons]);
 

@@ -39,19 +39,17 @@ export default function AdminAdmin() {
       } else {
         console.error("Error fetching data:", result.message);
         setData([]);
-        if (response.status === 401) {
-          // Clear the session if the token is unauthorized
-          signOut();
-        }
+        signOut();
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+      signOut();
     }
   }, [search, page, session?.access_token]);
 
   useEffect(() => {
     if (session) {
-        fetchData();
+      fetchData();
     }
   }, [fetchData, session]);
 

@@ -1,19 +1,21 @@
 "use client"
 import React, { useState, useEffect, useCallback } from "react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Table from "@/components/Table";
 import Card from "@/components/Card";
 import DefaultPagination from "@/components/Pagination";
 import { Insiden } from "@/types";
 import DeleteInsiden from "@/components/admin/DeleteInsiden";
 import UpdateStatusInsiden from "@/components/admin/UpdateStatusInsiden";
+import ExportExcel from "../ExportExcel";
+import { Sign } from "crypto";
 
 const AdminInsident: React.FC = () => {
   const { data: session } = useSession();
   const [data, setData] = useState<Insiden[]>([]);
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("unsafe");
-  const [status, setStatus] = useState("pending");
+  const [category, setCategory] = useState("");
+  const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const [showPage, setShowPage] = useState(1);
@@ -48,9 +50,11 @@ const AdminInsident: React.FC = () => {
       } else {
         console.error("Error fetching data:", result.message);
         setData([]);
+        signOut();
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+      signOut();
     }
   }, [search, category, status, page, session?.access_token]);
 
@@ -59,6 +63,19 @@ const AdminInsident: React.FC = () => {
       fetchData();
     }
   }, [fetchData, session]);
+
+  const excelExport = data.map((item: any, index: number) => ({
+    No: index + 1,
+    "Nama Insiden": item.title,
+    "Nama Pegawai": item.user_name,
+    "Kategory": item.category,
+    "Status": item.status,
+    "Deskripsi": item.description,
+    "Foto": item.image,
+    "Lokasi Insiden": item.location_name,
+    "Waktu Insiden": item.time_incident,
+    "Saran": item.saran,
+  }));
 
   const paginate = (pageNumber: number) => {
     setPage(pageNumber);
@@ -92,6 +109,9 @@ const AdminInsident: React.FC = () => {
   return (
     <Card title="Data Insiden" topMargin="mt-2" TopSideButtons={undefined}>
       <div className="inline-block w-full mb-3">
+        <div className="mb-3">
+          <ExportExcel excelData={excelExport} fileName="Data Insiden" title="Data Insiden PT Darya Varia Laboratoria"/>
+        </div>
         <div className="flex justify-between items-center w-full">
           <div className="flex items-center gap-3">
             <select
@@ -99,6 +119,7 @@ const AdminInsident: React.FC = () => {
               value={category}
               onChange={handleCategoryChange}
             >
+              <option value="">Choose Category</option>
               <option value="unsafe action">Unsafe Action</option>
               <option value="unsafe condition">Unsafe Condition</option>
               <option value="nearmiss">Nearmiss</option>
@@ -108,6 +129,7 @@ const AdminInsident: React.FC = () => {
               value={status}
               onChange={handleStatusChange}
             >
+              <option value="">Choose Status</option>
               <option value="pending">Pending</option>
               <option value="on progress">On Progress</option>
               <option value="approve">Approve</option>

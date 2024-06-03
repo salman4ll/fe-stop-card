@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import Card from "@/components/Card";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { sign } from "crypto";
 
 const Profile:React.FC = () => {
   const { data: session } = useSession();
@@ -25,6 +26,7 @@ const Profile:React.FC = () => {
           setFormData(data.data);
         } catch (error) {
           console.error("Error fetching profile data:", error);
+          signOut();
         }
       }
     };

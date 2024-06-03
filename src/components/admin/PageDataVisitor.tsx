@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Table from "@/components/Table";
 import DeleteUser from "@/components/admin/DeleteUser";
 import Card from "@/components/Card";
@@ -43,9 +43,11 @@ export default function AdminVisitor() {
       } else {
         console.error("Error fetching data:", result.message);
         setData([]);
+        signOut();
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+      signOut();
     }
   }, [search, verify, page, session?.access_token]);
 
@@ -110,7 +112,11 @@ export default function AdminVisitor() {
         </div>
       </div>
 
-      <Table columns={columns} data={getDataWithRowNumbers()} renderButtons={renderButtons} />
+      <Table
+        columns={columns}
+        data={getDataWithRowNumbers()}
+        renderButtons={renderButtons}
+      />
       <DefaultPagination
         page={page}
         totalData={data.length}

@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Table from "@/components/Table";
 import Card from "@/components/Card";
 import { Location } from "@/types";
@@ -39,15 +39,17 @@ export default function AdminLokasi() {
       } else {
         console.error("Error fetching data:", result.message);
         setData([]);
+        signOut();
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+      signOut();
     }
   }, [search, page, session?.access_token]);
 
   useEffect(() => {
     if (session) {
-        fetchData();
+      fetchData();
     }
   }, [fetchData, session]);
 
@@ -58,12 +60,20 @@ export default function AdminLokasi() {
   const columns = [
     { key: "no", label: "No" },
     { key: "id_location", label: "ID Lokasi" },
-    { key: "name", label: "Nama Lokasi" },    
+    { key: "name", label: "Nama Lokasi" },
   ];
 
   const renderButtons = (location: Location) => [
-    <UpdateLokasi key={location.id_location} location={location} onUpdate={fetchData} />,
-    <DeleteLocation key={location.id_location} location={location} onUpdate={fetchData} />,
+    <UpdateLokasi
+      key={location.id_location}
+      location={location}
+      onUpdate={fetchData}
+    />,
+    <DeleteLocation
+      key={location.id_location}
+      location={location}
+      onUpdate={fetchData}
+    />,
     // Add more buttons here if needed
   ];
 

@@ -1,12 +1,13 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Table from "@/components/Table";
 import DeleteUser from "@/components/admin/DeleteUser";
 import Card from "@/components/Card";
 import { User } from "@/types";
 import VerifyUser from "@/components/admin/VerifyUser";
 import DefaultPagination from "@/components/Pagination";
+import ExportExcel from "../ExportExcel";
 
 export default function AdminKaryawan() {
   const { data: session } = useSession();
@@ -43,11 +44,19 @@ export default function AdminKaryawan() {
       } else {
         console.error("Error fetching data:", result.message);
         setData([]);
+        signOut();
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+      signOut();
     }
   }, [search, verify, page, session?.access_token]);
+
+  const excelExport = data.map((item: any, index: number) => ({
+    No: index + 1,
+    "Nama Pegawai": item.name,
+    "Email": item.email,
+  }));
 
   useEffect(() => {
     if (session) {
@@ -86,6 +95,13 @@ export default function AdminKaryawan() {
   return (
     <Card title="Data Karyawan" topMargin="mt-2" TopSideButtons={undefined}>
       <div className="inline-block w-full mb-3">
+        <div className="mb-3">
+          <ExportExcel
+            excelData={excelExport}
+            fileName="Data Karyawan"
+            title="Data Karyawan PT Darya Varia Laboratoria"
+          />
+        </div>
         <div className="flex justify-between items-center w-full">
           <div className="flex items-center">
             <select
@@ -110,7 +126,11 @@ export default function AdminKaryawan() {
         </div>
       </div>
 
-      <Table columns={columns} data={getDataWithRowNumbers()} renderButtons={renderButtons} />
+      <Table
+        columns={columns}
+        data={getDataWithRowNumbers()}
+        renderButtons={renderButtons}
+      />
       <DefaultPagination
         page={page}
         totalData={data.length}
