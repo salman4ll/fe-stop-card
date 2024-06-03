@@ -39,11 +39,13 @@ export default function AdminAdmin() {
       } else {
         console.error("Error fetching data:", result.message);
         setData([]);
-        signOut();
+        if (response.status === 500) {
+          console.error("Server error occurred");
+          signOut();
+        }
       }
     } catch (error) {
       console.error("Error fetching data:", error);
-      signOut();
     }
   }, [search, page, session?.access_token]);
 
