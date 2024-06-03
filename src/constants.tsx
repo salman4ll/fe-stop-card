@@ -72,10 +72,30 @@ export const SIDENAV_ITEMS_USER: SideNavItem[] = [
     onClick: () => {
       signOut();
     },
-    // onClick: () => {
-    //   console.log("logout");
-
-    //   signOut();
-    // },
+  },
+];
+export const SIDENAV_ITEMS_VISITOR: SideNavItem[] = [
+  {
+    title: "Home",
+    path: "/visitor",
+    icon: <Icon icon="lucide:pie-chart" width="24" height="24" />,
+  },
+  {
+    title: "Laporan Insiden",
+    path: "/visitor/laporan",
+    icon: <Icon icon="carbon:event-incident" width="24" height="24" />,
+  },
+  {
+    title: "Profile",
+    path: "/visitor/profile",
+    icon: <Icon icon="tdesign:user-setting" width="24" height="24" />,
+  },
+  {
+    title: <span onClick={() => signOut()}>Logout</span>,
+    path: "/",
+    icon: <Icon icon="lucide:log-out" width="24" height="24" />,
+    onClick: () => {
+      signOut();
+    },
   },
 ];

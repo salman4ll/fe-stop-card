@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import logo from "@/assets/logo.png"
-import { SIDENAV_ITEMS, SIDENAV_ITEMS_USER } from "@/constants";
+import { SIDENAV_ITEMS, SIDENAV_ITEMS_USER, SIDENAV_ITEMS_VISITOR } from "@/constants";
 import { SideNavItem } from "@/types";
 import { Icon } from "@iconify/react";
 import { useSession } from "next-auth/react";
@@ -28,6 +28,27 @@ const SideNav = () => {
   
           <div className="flex flex-col space-y-2  md:px-6">
             {SIDENAV_ITEMS_USER.map((item, idx) => {
+              return <MenuItem key={idx} item={item} />;
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  }
+  else if (session?.user?.role === "visitor") {
+    return (
+      <div className="md:w-62 bg-white h-screen flex-1 fixed border-r border-zinc-200 hidden md:flex">
+        <div className="flex flex-col space-y-6 w-full">
+          <Link
+            href="/visitor"
+            className="flex flex-row space-x-6 items-center justify-center md:px-6  h-20 w-full text-center"
+          >
+            <Image src={logo} alt="" className="h-[63.4px] w-[100px] text-center"/>
+            {/* <span className="font-bold text-xl hidden md:flex ">Stop Card</span> */}
+          </Link>
+  
+          <div className="flex flex-col space-y-2  md:px-6">
+            {SIDENAV_ITEMS_VISITOR.map((item, idx) => {
               return <MenuItem key={idx} item={item} />;
             })}
           </div>

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import imgBg from "@/assets/bg.jpg";
-import logo from "@/assets/logo.png"
+import logo from "@/assets/logo.png";
 // import googleLogo from "@/assets/images/googleLogo.png";
 
 import Link from "next/link";
@@ -76,6 +76,19 @@ export default function Login() {
           />
         </div>
       );
+    } else if (session?.user?.role === "visitor") {
+      router.push("/visitor");
+      return (
+        <div className="flex w-full mx-auto justify-center items-center h-screen">
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+        </div>
+      );
     }
   }
 
@@ -122,6 +135,8 @@ export default function Login() {
             router.push("/karyawan");
           } else if (session?.user?.role === "admin") {
             router.push("/admin");
+          } else if (session?.user?.role === "visitor") {
+            router.push("/visitor");
           }
         }, 3000);
       }

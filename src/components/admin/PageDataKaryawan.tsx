@@ -44,18 +44,20 @@ export default function AdminKaryawan() {
       } else {
         console.error("Error fetching data:", result.message);
         setData([]);
-        signOut();
+        if (response.status === 500) {
+          console.error("Server error occurred");
+          signOut();
+        }
       }
     } catch (error) {
       console.error("Error fetching data:", error);
-      signOut();
     }
   }, [search, verify, page, session?.access_token]);
 
   const excelExport = data.map((item: any, index: number) => ({
     No: index + 1,
     "Nama Pegawai": item.name,
-    "Email": item.email,
+    Email: item.email,
   }));
 
   useEffect(() => {

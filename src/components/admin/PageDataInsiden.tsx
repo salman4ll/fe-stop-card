@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect, useCallback } from "react";
 import { signOut, useSession } from "next-auth/react";
 import Table from "@/components/Table";
@@ -22,11 +22,11 @@ const AdminInsident: React.FC = () => {
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
-  }
+  };
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setStatus(e.target.value);
-  }
+  };
 
   const fetchData = useCallback(async () => {
     try {
@@ -50,11 +50,13 @@ const AdminInsident: React.FC = () => {
       } else {
         console.error("Error fetching data:", result.message);
         setData([]);
-        signOut();
+        if (response.status === 500) {
+          console.error("Server error occurred");
+          signOut();
+        }
       }
     } catch (error) {
       console.error("Error fetching data:", error);
-      signOut();
     }
   }, [search, category, status, page, session?.access_token]);
 
@@ -68,13 +70,13 @@ const AdminInsident: React.FC = () => {
     No: index + 1,
     "Nama Insiden": item.title,
     "Nama Pegawai": item.user_name,
-    "Kategory": item.category,
-    "Status": item.status,
-    "Deskripsi": item.description,
-    "Foto": item.image,
+    Kategory: item.category,
+    Status: item.status,
+    Deskripsi: item.description,
+    Foto: item.image,
     "Lokasi Insiden": item.location_name,
     "Waktu Insiden": item.time_incident,
-    "Saran": item.saran,
+    Saran: item.saran,
   }));
 
   const paginate = (pageNumber: number) => {
@@ -94,9 +96,17 @@ const AdminInsident: React.FC = () => {
     { key: "image", label: "Image" }, // Tambahkan kolom gambar di sini
   ];
 
-  const renderButtons = (insiden: Insiden) => [    
-    <DeleteInsiden key={insiden.id_incident} insiden={insiden} onUpdate={fetchData} />,
-    <UpdateStatusInsiden key={insiden.id_incident} insiden={insiden} onUpdate={fetchData} />,
+  const renderButtons = (insiden: Insiden) => [
+    <DeleteInsiden
+      key={insiden.id_incident}
+      insiden={insiden}
+      onUpdate={fetchData}
+    />,
+    <UpdateStatusInsiden
+      key={insiden.id_incident}
+      insiden={insiden}
+      onUpdate={fetchData}
+    />,
   ];
 
   const getDataWithRowNumbers = () => {
@@ -110,7 +120,11 @@ const AdminInsident: React.FC = () => {
     <Card title="Data Insiden" topMargin="mt-2" TopSideButtons={undefined}>
       <div className="inline-block w-full mb-3">
         <div className="mb-3">
-          <ExportExcel excelData={excelExport} fileName="Data Insiden" title="Data Insiden PT Darya Varia Laboratoria"/>
+          <ExportExcel
+            excelData={excelExport}
+            fileName="Data Insiden"
+            title="Data Insiden PT Darya Varia Laboratoria"
+          />
         </div>
         <div className="flex justify-between items-center w-full">
           <div className="flex items-center gap-3">

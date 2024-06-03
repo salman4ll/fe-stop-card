@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import SideNav from "@/components/SideNav";
@@ -8,11 +8,10 @@ import Header from "@/components/Header";
 import HeaderMobile from "@/components/HeaderMobile";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, Spinner } from "@chakra-ui/react";
 import HeaderMobileUser from "@/components/HeaderMobileUser";
 
 const inter = Inter({ subsets: ["latin"] });
-
 
 export default function RootLayout({
   children,
@@ -24,16 +23,14 @@ export default function RootLayout({
 
   if (status === "loading") {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          width: "100vw",
-        }}
-      >
-        <span className="loading loading-spinner loading-lg"></span>
+      <div className="flex w-full mx-auto justify-center items-center h-screen">
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+        />
       </div>
     );
   }
@@ -41,16 +38,14 @@ export default function RootLayout({
   if (session?.user?.role !== "karyawan") {
     route.push("/");
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          width: "100vw",
-        }}
-      >
-        <span className="loading loading-spinner loading-lg"></span>
+      <div className="flex w-full mx-auto justify-center items-center h-screen">
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+        />
       </div>
     );
   }
@@ -60,7 +55,7 @@ export default function RootLayout({
         <main className="flex-1">
           <SideNav />
           <MarginWidthWrapper>
-            <Header currentUser={session?.user}/>
+            <Header currentUser={session?.user} />
             <HeaderMobileUser />
             <ChakraProvider>
               <PageWrapper>{children}</PageWrapper>

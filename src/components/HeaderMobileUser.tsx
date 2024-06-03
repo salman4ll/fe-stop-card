@@ -5,10 +5,11 @@ import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { SIDENAV_ITEMS_USER } from '@/constants';
+import { SIDENAV_ITEMS_USER, SIDENAV_ITEMS_VISITOR } from '@/constants';
 import { SideNavItem } from '@/types';
 import { Icon } from '@iconify/react';
 import { motion, useCycle } from 'framer-motion';
+import { useSession } from 'next-auth/react';
 
 type MenuItemWithSubMenuProps = {
   item: SideNavItem;
@@ -39,6 +40,59 @@ const HeaderMobileUser = () => {
   const containerRef = useRef(null);
   const { height } = useDimensions(containerRef);
   const [isOpen, toggleOpen] = useCycle(false, true);
+  const {data: session} = useSession();
+
+  if (session?.user?.role == 'visitor') {
+    return (
+      <motion.nav
+        initial={false}
+        animate={isOpen ? 'open' : 'closed'}
+        custom={height}
+        className={`fixed inset-0 z-50 w-full md:hidden ${
+          isOpen ? '' : 'pointer-events-none'
+        }`}
+        ref={containerRef}
+      >
+        <motion.div
+          className="absolute inset-0 right-0 w-full bg-white"
+          variants={sidebar}
+        />
+        <motion.ul
+          variants={variants}
+          className="absolute grid w-full gap-3 px-10 py-16"
+        >
+          {SIDENAV_ITEMS_VISITOR.map((item, idx) => {
+            const isLastItem = idx === SIDENAV_ITEMS_VISITOR.length - 1; // Check if it's the last item
+
+            return (
+              <div key={idx}>
+                {item.submenu ? (
+                  <MenuItemWithSubMenu item={item} toggleOpen={toggleOpen} />
+                ) : (
+                  <MenuItem>
+                    <Link
+                      href={item.path}
+                      onClick={() => toggleOpen()}
+                      className={`flex w-full text-2xl ${
+                        item.path === pathname ? 'font-bold' : ''
+                      }`}
+                    >
+                      {item.title}
+                    </Link>
+                  </MenuItem>
+                )}
+
+                {!isLastItem && (
+                  <MenuItem className="my-3 h-px w-full bg-gray-300" />
+                )}
+              </div>
+            );
+          })}
+        </motion.ul>
+        <MenuToggle toggle={toggleOpen} />
+      </motion.nav>
+    );
+  }
 
   return (
     <motion.nav

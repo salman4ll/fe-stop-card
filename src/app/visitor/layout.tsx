@@ -1,5 +1,4 @@
 "use client";
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
 import SideNav from "@/components/SideNav";
@@ -10,6 +9,7 @@ import HeaderMobile from "@/components/HeaderMobile";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { ChakraProvider, Spinner } from "@chakra-ui/react";
+import HeaderMobileUser from "@/components/HeaderMobileUser";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,7 +35,7 @@ export default function RootLayout({
     );
   }
 
-  if (session?.user?.role !== "admin") {
+  if (session?.user?.role !== "visitor") {
     route.push("/");
     return (
       <div className="flex w-full mx-auto justify-center items-center h-screen">
@@ -56,7 +56,7 @@ export default function RootLayout({
           <SideNav />
           <MarginWidthWrapper>
             <Header currentUser={session?.user} />
-            <HeaderMobile />
+            <HeaderMobileUser />
             <ChakraProvider>
               <PageWrapper>{children}</PageWrapper>
             </ChakraProvider>

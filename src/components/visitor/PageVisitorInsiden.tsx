@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useState, useEffect, useCallback } from "react";
 import { signOut, useSession } from "next-auth/react";
 import Table from "@/components/Table";
@@ -7,45 +7,31 @@ import DefaultPagination from "@/components/Pagination";
 import { Insiden } from "@/types";
 import DeleteInsiden from "@/components/admin/DeleteInsiden";
 import UpdateStatusInsiden from "@/components/admin/UpdateStatusInsiden";
-import UpdateIncident from "@/components/karyawan/UpdateIncident";
-import AddIncident from "@/components/karyawan/AddIncindent";
-import { Metadata } from "next";
+import ExportExcel from "../ExportExcel";
+import { Sign } from "crypto";
 
-const KaryawanInsiden: React.FC = () => {
+const VisitorInsiden: React.FC = () => {
   const { data: session } = useSession();
   const [data, setData] = useState<Insiden[]>([]);
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("unsafe");
-  const [status, setStatus] = useState("pending");
+  const [category, setCategory] = useState("");
+  const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const [showPage, setShowPage] = useState(1);
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
-  };
+  }
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setStatus(e.target.value);
-  };
-
-  const renderButtons = (insiden: Insiden) => [
-    <DeleteInsiden
-      key={insiden.id_incident}
-      insiden={insiden}
-      onUpdate={fetchData}
-    />,
-    <UpdateIncident
-      key={insiden.id_incident}
-      incident={insiden}
-      onUpdate={fetchData}
-    />,
-  ];
+  }
 
   const fetchData = useCallback(async () => {
     try {
       const response = await fetch(
-        `https://www.salman4l.my.id/api/incidents/user?category=${category}&status=${status}&search=${search}&page=${page}`,
+        `https://www.salman4l.my.id/api/incidents?category=${category}&status=${status}&search=${search}&page=${page}`,
         {
           method: "GET",
           headers: {
@@ -65,20 +51,33 @@ const KaryawanInsiden: React.FC = () => {
         console.error("Error fetching data:", result.message);
         setData([]);
         if (response.status === 500) {
-          console.error("Server error occurred");
-          signOut();
-        }
+            console.error("Server error occurred");
+            signOut();
+          }
       }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  }, [search, category, status, page, session?.access_token, renderButtons]);
+  }, [search, category, status, page, session?.access_token]);
 
   useEffect(() => {
     if (session) {
       fetchData();
     }
   }, [fetchData, session]);
+
+  const excelExport = data.map((item: any, index: number) => ({
+    No: index + 1,
+    "Nama Insiden": item.title,
+    "Nama Pegawai": item.user_name,
+    "Kategory": item.category,
+    "Status": item.status,
+    "Deskripsi": item.description,
+    "Foto": item.image,
+    "Lokasi Insiden": item.location_name,
+    "Waktu Insiden": item.time_incident,
+    "Saran": item.saran,
+  }));
 
   const paginate = (pageNumber: number) => {
     setPage(pageNumber);
@@ -97,6 +96,10 @@ const KaryawanInsiden: React.FC = () => {
     { key: "image", label: "Image" }, // Tambahkan kolom gambar di sini
   ];
 
+  const renderButtons = (insiden: Insiden) => [    
+    
+  ];
+
   const getDataWithRowNumbers = () => {
     return data.map((user, index) => ({
       ...user,
@@ -108,7 +111,7 @@ const KaryawanInsiden: React.FC = () => {
     <Card title="Data Insiden" topMargin="mt-2" TopSideButtons={undefined}>
       <div className="inline-block w-full mb-3">
         <div className="mb-3">
-          <AddIncident onUpdate={fetchData} />
+          <ExportExcel excelData={excelExport} fileName="Data Insiden" title="Data Insiden PT Darya Varia Laboratoria"/>
         </div>
         <div className="flex justify-between items-center w-full">
           <div className="flex items-center gap-3">
@@ -117,6 +120,7 @@ const KaryawanInsiden: React.FC = () => {
               value={category}
               onChange={handleCategoryChange}
             >
+              <option value="">Choose Category</option>
               <option value="unsafe action">Unsafe Action</option>
               <option value="unsafe condition">Unsafe Condition</option>
               <option value="nearmiss">Nearmiss</option>
@@ -126,6 +130,7 @@ const KaryawanInsiden: React.FC = () => {
               value={status}
               onChange={handleStatusChange}
             >
+              <option value="">Choose Status</option>
               <option value="pending">Pending</option>
               <option value="on progress">On Progress</option>
               <option value="approve">Approve</option>
@@ -160,4 +165,4 @@ const KaryawanInsiden: React.FC = () => {
   );
 };
 
-export default KaryawanInsiden;
+export default VisitorInsiden;
