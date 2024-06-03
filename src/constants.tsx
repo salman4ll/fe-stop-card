@@ -36,7 +36,12 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     icon: <Icon icon="carbon:event-incident" width="24" height="24" />,
   },
   {
-    title: "Logout",
+    title: "Profile",
+    path: "/admin/profile",
+    icon: <Icon icon="tdesign:user-setting" width="24" height="24" />,
+  },
+  {
+    title: <span onClick={() => signOut()}>Logout</span>,
     path: "/",
     icon: <Icon icon="lucide:log-out" width="24" height="24" />,
     onClick: () => {
@@ -61,7 +66,7 @@ export const SIDENAV_ITEMS_USER: SideNavItem[] = [
     icon: <Icon icon="tdesign:user-setting" width="24" height="24" />,
   },
   {
-    title: "Logout",
+    title: <span onClick={() => signOut()}>Logout</span>,
     path: "/",
     icon: <Icon icon="lucide:log-out" width="24" height="24" />,
     onClick: () => {

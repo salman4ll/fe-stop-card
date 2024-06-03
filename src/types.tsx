@@ -1,10 +1,11 @@
 export type SideNavItem = {
-  title: string;
+  title: string | JSX.Element;
   path: string;
   icon?: JSX.Element;
   submenu?: boolean;
   subMenuItems?: SideNavItem[];
   onClick?: () => void;
+  onTouchStart?: () => void;
 };
 
 export type TableHead = {
