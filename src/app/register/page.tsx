@@ -12,6 +12,7 @@ export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("karyawan");
+  const [position, setPosition] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [message, setMessage] = useState("");
@@ -31,6 +32,7 @@ export default function Register() {
       role,
       password,
       password_confirmation: passwordConfirmation,
+      position,
     };
 
     try {
@@ -90,7 +92,7 @@ export default function Register() {
             <div>
               <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-2 gap-1">
-                  <div className="col-span-2 mb-4">
+                  <div className="col-span-2 mb-2">
                     <label
                       htmlFor="name"
                       className="text-[#666666] text-md font-normal"
@@ -106,9 +108,9 @@ export default function Register() {
                       onChange={(e) => setName(e.target.value)}
                     ></input>
                   </div>
-                  <div className="col-span-2 mb-4">
+                  <div className="col-span-2 mb-2">
                     <label htmlFor="role" className="text-[#666666] text-md font-normal">
-                        Position
+                        Role
                     </label>
                     <select
                       className="select select-bordered select-sm h-[45.6px] appearance-none rounded-lg w-[100%] py-1 px-3 mt-1 text-gray-700 focus:outline-none focus:shadow-outline"
@@ -120,7 +122,19 @@ export default function Register() {
                         <option value="visitor">Visitor</option>
                     </select>
                   </div>
-                  <div className="col-span-2 mb-4">
+                  <div className="col-span-2 mb-2">
+                    <label htmlFor="position" className="text-[#666666] text-md font-normal">
+                      Position
+                    </label>
+                    <input
+                      className="appearance-none border rounded-lg w-full py-3 px-3 mt-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      id="position"
+                      type="text"
+                      placeholder="Software Engineer"
+                      value={position}
+                      onChange={(e) => setPosition(e.target.value)}/>
+                  </div>
+                  <div className="col-span-2 mb-2">
                     <label
                       htmlFor="email"
                       className="text-[#666666] text-md font-normal"
@@ -136,7 +150,7 @@ export default function Register() {
                       onChange={(e) => setEmail(e.target.value)}
                     ></input>
                   </div>
-                  <div className="col-span-2">
+                  <div className="">
                     <div className="flex justify-between">
                       <label
                         htmlFor="password"
@@ -154,7 +168,7 @@ export default function Register() {
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
-                  <div className="col-span-2">
+                  <div className="">
                     <div className="flex justify-between">
                       <label
                         htmlFor="password_confirmation"

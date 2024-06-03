@@ -58,6 +58,7 @@ export default function AdminKaryawan() {
     No: index + 1,
     "Nama Pegawai": item.name,
     Email: item.email,
+    "Posisi/Jabatan": item.position,
   }));
 
   useEffect(() => {
@@ -74,8 +75,10 @@ export default function AdminKaryawan() {
     { key: "no", label: "No" },
     { key: "id_user", label: "ID User" },
     { key: "name", label: "Name" },
+    { key: "position", label: "Posisi"},
     { key: "email", label: "Email" },
     { key: "role", label: "Role" },
+    { key: "position", label: "Posisi/Jabatan" },
     { key: "is_verified", label: "Is Verified" },
   ];
 

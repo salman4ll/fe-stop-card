@@ -69,6 +69,7 @@ export default function AdminVisitor() {
     { key: "name", label: "Name" },
     { key: "email", label: "Email" },
     { key: "role", label: "Role" },
+    { key: "position", label: "Position"},
     { key: "is_verified", label: "Is Verified" },
   ];
 

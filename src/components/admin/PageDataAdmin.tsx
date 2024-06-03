@@ -73,7 +73,6 @@ export default function AdminAdmin() {
       <VerifyUser key={user.id_user} user={user} onUpdate={fetchData} />
     ),
     <DeleteUser key={user.id_user} user={user} onUpdate={fetchData} />,
-    // Add more buttons here if needed
   ];
 
   const getDataWithRowNumbers = () => {

@@ -88,6 +88,7 @@ const KaryawanInsiden: React.FC = () => {
     { key: "no", label: "No" },
     { key: "title", label: "Nama Insiden" },
     { key: "user_name", label: "Nama Karyawan" },
+    { key: "position", label: "Position"},
     { key: "description", label: "Deskripsi Insiden" },
     { key: "location_name", label: "Lokasi" },
     { key: "time_incident", label: "Tanggal" },

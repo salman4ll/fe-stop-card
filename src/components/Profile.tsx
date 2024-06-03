@@ -6,7 +6,7 @@ import { sign } from "crypto";
 
 const Profile:React.FC = () => {
   const { data: session } = useSession();
-  const [initialData, setInitialData] = useState({ name: "", email: "" });
+  const [initialData, setInitialData] = useState({ name: "", email: "", position: "" });
   const [formData, setFormData] = useState({ ...initialData });
   const [formChanged, setFormChanged] = useState(false);
 
@@ -98,6 +98,19 @@ const Profile:React.FC = () => {
               name="email"
               className="p-2 bg-[#eac8fc45] rounded-lg hover:border hover:border-black"
               value={formData.email}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mt-4 flex flex-col">
+            <label htmlFor="position" className="p-2">
+              Position
+            </label>
+            <input
+              id="position"
+              type="text"
+              name="position"
+              className="p-2 bg-[#eac8fc45] rounded-lg hover:border hover:border-black"
+              value={formData.position}
               onChange={handleChange}
             />
           </div>
