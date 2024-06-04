@@ -25,20 +25,6 @@ export default function Register() {
     setShowPassword(!showPassword);
   };
 
-  if (status === "loading") {
-    return (
-      <div className="flex w-full mx-auto justify-center items-center h-screen">
-        <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="blue.500"
-          size="xl"
-        />
-      </div>
-    );
-  }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage("");
