@@ -6,17 +6,16 @@ import Card from "@/components/Card";
 import DefaultPagination from "@/components/Pagination";
 import { Insiden } from "@/types";
 import DeleteInsiden from "@/components/admin/DeleteInsiden";
-import UpdateStatusInsiden from "@/components/admin/UpdateStatusInsiden";
 import UpdateIncident from "@/components/karyawan/UpdateIncident";
 import AddIncident from "@/components/karyawan/AddIncindent";
-import { Metadata } from "next";
+
 
 const KaryawanInsiden: React.FC = () => {
   const { data: session } = useSession();
   const [data, setData] = useState<Insiden[]>([]);
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("unsafe");
-  const [status, setStatus] = useState("pending");
+  const [category, setCategory] = useState("");
+  const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const [showPage, setShowPage] = useState(1);
@@ -28,19 +27,6 @@ const KaryawanInsiden: React.FC = () => {
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setStatus(e.target.value);
   };
-
-  const renderButtons = (insiden: Insiden) => [
-    <DeleteInsiden
-      key={insiden.id_incident}
-      insiden={insiden}
-      onUpdate={fetchData}
-    />,
-    <UpdateIncident
-      key={insiden.id_incident}
-      incident={insiden}
-      onUpdate={fetchData}
-    />,
-  ];
 
   const fetchData = useCallback(async () => {
     try {
@@ -72,7 +58,7 @@ const KaryawanInsiden: React.FC = () => {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  }, [search, category, status, page, session?.access_token, renderButtons]);
+  }, [search, category, status, page, session?.access_token]);
 
   useEffect(() => {
     if (session) {
@@ -98,6 +84,19 @@ const KaryawanInsiden: React.FC = () => {
     { key: "image", label: "Image" }, // Tambahkan kolom gambar di sini
   ];
 
+  const renderButtons = (insiden: Insiden) => [
+    <DeleteInsiden
+      key={insiden.id_incident}
+      insiden={insiden}
+      onUpdate={fetchData}
+    />,
+    <UpdateIncident
+      key={insiden.id_incident}
+      incident={insiden}
+      onUpdate={fetchData}
+    />,
+  ];
+
   const getDataWithRowNumbers = () => {
     return data.map((user, index) => ({
       ...user,
@@ -118,6 +117,7 @@ const KaryawanInsiden: React.FC = () => {
               value={category}
               onChange={handleCategoryChange}
             >
+              <option value="">Choose Category</option>
               <option value="unsafe action">Unsafe Action</option>
               <option value="unsafe condition">Unsafe Condition</option>
               <option value="nearmiss">Nearmiss</option>
@@ -127,6 +127,7 @@ const KaryawanInsiden: React.FC = () => {
               value={status}
               onChange={handleStatusChange}
             >
+              <option value="">Choose Status</option>
               <option value="pending">Pending</option>
               <option value="on progress">On Progress</option>
               <option value="approve">Approve</option>

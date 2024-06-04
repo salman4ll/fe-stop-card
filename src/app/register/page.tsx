@@ -6,6 +6,7 @@ import imgLogo from "@/assets/logo.png";
 import imageRegis from "@/assets/imageRegis.png";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Spinner, useToast } from "@chakra-ui/react";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -17,10 +18,26 @@ export default function Register() {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [message, setMessage] = useState("");
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const toast = useToast();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  if (status === "loading") {
+    return (
+      <div className="flex w-full mx-auto justify-center items-center h-screen">
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+        />
+      </div>
+    );
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +53,7 @@ export default function Register() {
     };
 
     try {
+      setLoading(true);
       const response = await fetch("https://www.salman4l.my.id/api/register", {
         method: "POST",
         headers: {
@@ -46,16 +64,45 @@ export default function Register() {
 
       const result = await response.json();
       if (response.ok) {
-        setMessage("Registration successful!");
+        toast({
+          title: "Success",
+          description: "Login success",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
         setTimeout(() => {
-            router.push("/");
-          }, 2000);
-      } else {
-        setMessage(result.message || "Registration failed.");
+          router.push("/");
+        }, 2000);
+      } else if (result.code === 400) {
+        let errorMessage = "";
+        if (result.errors.email) {
+          errorMessage += result.errors.email[0] + " ";
+        }
+        if (result.errors.position) {
+          errorMessage += result.errors.position[0] + " ";
+        }
+        if (result.errors.password) {
+          errorMessage += result.errors.password[0] + " ";
+        }
+        if (result.errors.name) {
+          errorMessage += result.errors.name[0];
+        }
+        toast({
+          title: "Error",
+          description: errorMessage,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
       }
-    } catch (error) {
+    } catch (error: any) {
       setMessage("An error occurred. Please try again.");
+      setLoading(false);
     }
+    setLoading(false);
   };
 
   return (
@@ -109,8 +156,11 @@ export default function Register() {
                     ></input>
                   </div>
                   <div className="col-span-2 mb-2">
-                    <label htmlFor="role" className="text-[#666666] text-md font-normal">
-                        Role
+                    <label
+                      htmlFor="role"
+                      className="text-[#666666] text-md font-normal"
+                    >
+                      Role
                     </label>
                     <select
                       className="select select-bordered select-sm h-[45.6px] appearance-none rounded-lg w-[100%] py-1 px-3 mt-1 text-gray-700 focus:outline-none focus:shadow-outline"
@@ -118,12 +168,15 @@ export default function Register() {
                       value={role}
                       onChange={(e) => setRole(e.target.value)}
                     >
-                        <option value="karyawan">Karyawan</option>
-                        <option value="visitor">Visitor</option>
+                      <option value="karyawan">Karyawan</option>
+                      <option value="visitor">Visitor</option>
                     </select>
                   </div>
                   <div className="col-span-2 mb-2">
-                    <label htmlFor="position" className="text-[#666666] text-md font-normal">
+                    <label
+                      htmlFor="position"
+                      className="text-[#666666] text-md font-normal"
+                    >
                       Position
                     </label>
                     <input
@@ -132,7 +185,8 @@ export default function Register() {
                       type="text"
                       placeholder="Software Engineer"
                       value={position}
-                      onChange={(e) => setPosition(e.target.value)}/>
+                      onChange={(e) => setPosition(e.target.value)}
+                    />
                   </div>
                   <div className="col-span-2 mb-2">
                     <label
@@ -185,7 +239,7 @@ export default function Register() {
                       value={passwordConfirmation}
                       onChange={(e) => setPasswordConfirmation(e.target.value)}
                     />
-                  </div>                  
+                  </div>
                   <button
                     type="submit"
                     className="w-full flex justify-center bg-[#B2B2B2] hover:bg-[#666666] text-white rounded-[40px] py-3 mt-6"
@@ -194,7 +248,9 @@ export default function Register() {
                   </button>
                 </div>
               </form>
-              {message && <p className="mt-4 text-center text-red-500">{message}</p>}
+              {message && (
+                <p className="mt-4 text-center text-red-500">{message}</p>
+              )}
             </div>
           </div>
           <div className="flex flex-col justify-center m-auto ml-4 max-md:hidden">

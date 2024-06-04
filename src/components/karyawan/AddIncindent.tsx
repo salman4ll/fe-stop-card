@@ -59,7 +59,7 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
     });
 
     const data = await response.json();
-    if (data.code !== 201) {
+    if (data.code !== 200) {
       toast({
         title: "Error",
         description: data.message,
@@ -93,14 +93,6 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
   function handleChange() {
     setModal(!modal);
   }
-  console.log(
-    title,
-    category,
-    description,
-    image,
-    timeIncident,
-    selectedLocation
-  );
 
   return (
     <div>
@@ -129,15 +121,18 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
               />
             </div>
             <div className="form-control">
-              <label className="label font-bold">Category</label>
-              <input
-                type="text"
+              <label htmlFor="category" className="label font-bold">Category</label>
+              <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 className="input w-full input-bordered"
-                placeholder="Category"
-              />
-            </div>
+              >
+                <option value="">Select Category</option>
+                <option value="unsafe action">Unsafe Action</option>
+                <option value="unsafe condition">Unsafe Condition</option>
+                <option value="nearmiss">Nearmiss</option>
+              </select>
+            </div>            
             <div className="form-control">
               <label className="label font-bold">Description</label>
               <textarea
@@ -167,7 +162,7 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
             <div className="form-control">
               <label className="label font-bold">Time Incident</label>
               <input
-                type="date"
+                type="datetime-local"
                 value={timeIncident}
                 onChange={(e) => setTimeIncident(e.target.value)}
                 className="input w-full input-bordered"

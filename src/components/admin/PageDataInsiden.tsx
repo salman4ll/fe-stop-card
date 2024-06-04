@@ -8,7 +8,7 @@ import { Insiden } from "@/types";
 import DeleteInsiden from "@/components/admin/DeleteInsiden";
 import UpdateStatusInsiden from "@/components/admin/UpdateStatusInsiden";
 import ExportExcel from "../ExportExcel";
-import { Sign } from "crypto";
+
 
 const AdminInsident: React.FC = () => {
   const { data: session } = useSession();
