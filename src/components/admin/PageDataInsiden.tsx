@@ -14,6 +14,7 @@ const AdminInsident: React.FC = () => {
   const { data: session } = useSession();
   const [data, setData] = useState<Insiden[]>([]);
   const [search, setSearch] = useState("");
+  const [area, setArea] = useState("");
   const [category, setCategory] = useState("");
   const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
@@ -28,10 +29,14 @@ const AdminInsident: React.FC = () => {
     setStatus(e.target.value);
   };
 
+  const handleAreaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setArea(e.target.value);
+  };
+
   const fetchData = useCallback(async () => {
     try {
       const response = await fetch(
-        `https://www.salman4l.my.id/api/incidents?category=${category}&status=${status}&search=${search}&page=${page}`,
+        `https://www.salman4l.my.id/api/incidents?category=${category}&status=${status}&search=${search}&page=${page}&area=${area}`,
         {
           method: "GET",
           headers: {
@@ -58,7 +63,7 @@ const AdminInsident: React.FC = () => {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  }, [search, category, status, page, session?.access_token]);
+  }, [search, area, category, status, page, session?.access_token]);
 
   useEffect(() => {
     if (session) {
@@ -68,6 +73,7 @@ const AdminInsident: React.FC = () => {
 
   const excelExport = data.map((item: any, index: number) => ({
     No: index + 1,
+    Area: item.area,
     "Nama Insiden": item.title,
     "Nama Pegawai": item.user_name,
     "Posisi/Departemen": item.position,
@@ -86,6 +92,7 @@ const AdminInsident: React.FC = () => {
 
   const columns = [
     { key: "no", label: "No" },
+    { key: "area", label: "Area"},
     { key: "title", label: "Nama Insiden" },
     { key: "user_name", label: "Nama Karyawan" },
     { key: "position", label: "Position"},
@@ -130,6 +137,15 @@ const AdminInsident: React.FC = () => {
         </div>
         <div className="flex justify-between items-center w-full">
           <div className="flex items-center gap-3">
+          <select
+              className="select select-bordered select-sm w-full max-w-xs"
+              value={area}
+              onChange={handleAreaChange}
+            >
+              <option value="">Choose Area</option>
+              <option value="citeureup">Citeureup</option>             
+              <option value="gunung putri">Gunung Putri</option>             
+            </select>
             <select
               className="select select-bordered select-sm w-full max-w-xs"
               value={category}

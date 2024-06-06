@@ -12,8 +12,10 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [noHp, setNoHp] = useState("");
   const [role, setRole] = useState("karyawan");
   const [position, setPosition] = useState("");
+  const [asal, setAsal] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [message, setMessage] = useState("");
@@ -29,14 +31,19 @@ export default function Register() {
     e.preventDefault();
     setMessage("");
 
-    const payload = {
+    const payload: {[key: string]: any} = {
       name,
       email,
+      no_hp: noHp,
       role,
       password,
       password_confirmation: passwordConfirmation,
       position,
     };
+
+    if (role === "visitor") {
+      payload.asal = asal;
+    }
 
     try {
       setLoading(true);
@@ -75,6 +82,9 @@ export default function Register() {
         if (result.errors.name) {
           errorMessage += result.errors.name[0];
         }
+        if (result.errors.asal) {
+          errorMessage += result.errors.asal[0];
+        }
         toast({
           title: "Error",
           description: errorMessage,
@@ -93,17 +103,19 @@ export default function Register() {
 
   return (
     <main className="relative h-screen w-full flex flex-col">
-      <Image
-        alt="image background"
-        src={imgBg}
-        quality={100}
-        fill
-        sizes="100vw"
-        style={{
-          objectFit: "cover",
-        }}
-      />
-      <div className="w-[90%] pt-4 pb-6 pr-6 pl-6 m-auto bg-white rounded-[10px] lg:max-w-3xl z-10">
+      <div className="fixed top-0 left-0 w-full h-full z-0">
+        <Image
+          alt="image background"
+          src={imgBg}
+          quality={100}
+          fill
+          sizes="100vw"
+          style={{
+            objectFit: "cover",
+          }}
+        />
+      </div>
+      <div className="w-[90%] pt-4 pb-4 pr-6 pl-6 m-auto bg-white rounded-[10px] lg:max-w-3xl z-10">
         <Image
           alt="logo ambis kerja"
           src={imgLogo}
@@ -112,8 +124,8 @@ export default function Register() {
         />
         <div className="grid grid-cols-3 gap-4">
           <div className="col-span-3 md:col-span-2">
-            <div className="w-full mb-6">
-              <h1 className="text-xl font-medium mt-2">Create an account</h1>
+            <div className="w-full mb-3">
+              <h1 className="text-xl font-medium">Create an account</h1>
 
               <div className="flex text-xs md:text-base">
                 <p className="font-normal mr-1">Already have an account?</p>{" "}
@@ -133,12 +145,44 @@ export default function Register() {
                       Name
                     </label>
                     <input
-                      className="appearance-none border rounded-lg w-full py-3 px-3 mt-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      className="appearance-none border rounded-lg w-full py-2 px-2 mt-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       id="name"
                       type="text"
                       placeholder="Tatang Subagyo"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
+                    ></input>
+                  </div>
+                  <div className="mb-2">
+                    <label
+                      htmlFor="email"
+                      className="text-[#666666] text-md font-normal"
+                    >
+                      Email
+                    </label>
+                    <input
+                      className="appearance-none border rounded-lg w-full py-2 px-2 mt-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      id="email"
+                      type="email"
+                      placeholder="example@gmail.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    ></input>
+                  </div>
+                  <div className="mb-2">
+                    <label
+                      htmlFor="no_hp"
+                      className="text-[#666666] text-md font-normal"
+                    >
+                      No Hp
+                    </label>
+                    <input
+                      className="appearance-none border rounded-lg w-full py-2 px-2 mt-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      id="no_hp"
+                      type="text"
+                      placeholder="081234567890"
+                      value={noHp}
+                      onChange={(e) => setNoHp(e.target.value)}
                     ></input>
                   </div>
                   <div className="col-span-2 mb-2">
@@ -166,7 +210,7 @@ export default function Register() {
                       Position
                     </label>
                     <input
-                      className="appearance-none border rounded-lg w-full py-3 px-3 mt-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      className="appearance-none border rounded-lg w-full py-2 px-2 mt-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       id="position"
                       type="text"
                       placeholder="Software Engineer"
@@ -174,22 +218,24 @@ export default function Register() {
                       onChange={(e) => setPosition(e.target.value)}
                     />
                   </div>
-                  <div className="col-span-2 mb-2">
-                    <label
-                      htmlFor="email"
-                      className="text-[#666666] text-md font-normal"
-                    >
-                      Email
-                    </label>
-                    <input
-                      className="appearance-none border rounded-lg w-full py-3 px-3 mt-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      id="email"
-                      type="email"
-                      placeholder="example@gmail.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    ></input>
-                  </div>
+                  {role === "visitor" && (
+                    <div className="col-span-2 mb-2">
+                      <label
+                        htmlFor="asal"
+                        className="text-[#666666] text-md font-normal"
+                      >
+                        Asal
+                      </label>
+                      <input
+                        className="appearance-none border rounded-lg w-full py-2 px-2 mt-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="asal"
+                        type="text"
+                        placeholder="Jakarta"
+                        value={asal}
+                        onChange={(e) => setAsal(e.target.value)}
+                      />
+                    </div>
+                  )}
                   <div className="">
                     <div className="flex justify-between">
                       <label
@@ -200,7 +246,7 @@ export default function Register() {
                       </label>
                     </div>
                     <input
-                      className="appearance-none border rounded-lg w-full py-3 px-3 mt-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      className="appearance-none border rounded-lg w-full py-2 px-2 mt-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       id="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="******"
@@ -218,7 +264,7 @@ export default function Register() {
                       </label>
                     </div>
                     <input
-                      className="appearance-none border rounded-lg w-full py-3 px-3 mt-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      className="appearance-none border rounded-lg w-full py-2 px-2 mt-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       id="password_confirmation"
                       type={showPassword ? "text" : "password"}
                       placeholder="******"

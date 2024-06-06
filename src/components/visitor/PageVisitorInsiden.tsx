@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect, useCallback } from "react";
 import { signOut, useSession } from "next-auth/react";
 import Table from "@/components/Table";
@@ -6,14 +6,15 @@ import Card from "@/components/Card";
 import DefaultPagination from "@/components/Pagination";
 import { Insiden } from "@/types";
 import DeleteInsiden from "@/components/admin/DeleteInsiden";
-import UpdateStatusInsiden from "@/components/admin/UpdateStatusInsiden";
-import ExportExcel from "../ExportExcel";
-import { Sign } from "crypto";
+import UpdateIncident from "@/components/karyawan/UpdateIncident";
+import AddIncident from "@/components/karyawan/AddIncindent";
 
-const VisitorInsiden: React.FC = () => {
+
+const KaryawanInsiden: React.FC = () => {
   const { data: session } = useSession();
   const [data, setData] = useState<Insiden[]>([]);
   const [search, setSearch] = useState("");
+  const [area, setArea] = useState("");
   const [category, setCategory] = useState("");
   const [status, setStatus] = useState("");
   const [page, setPage] = useState(1);
@@ -22,16 +23,20 @@ const VisitorInsiden: React.FC = () => {
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategory(e.target.value);
-  }
+  };
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setStatus(e.target.value);
-  }
+  };
+
+  const handleAreaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setArea(e.target.value);
+  };
 
   const fetchData = useCallback(async () => {
     try {
       const response = await fetch(
-        `https://www.salman4l.my.id/api/incidents?category=${category}&status=${status}&search=${search}&page=${page}`,
+        `https://www.salman4l.my.id/api/incidents/user?category=${category}&status=${status}&search=${search}&page=${page}&area=${area}`,
         {
           method: "GET",
           headers: {
@@ -51,14 +56,14 @@ const VisitorInsiden: React.FC = () => {
         console.error("Error fetching data:", result.message);
         setData([]);
         if (response.status === 500) {
-            console.error("Server error occurred");
-            signOut();
-          }
+          console.error("Server error occurred");
+          signOut();
+        }
       }
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  }, [search, category, status, page, session?.access_token]);
+  }, [search, area, category, status, page, session?.access_token]);
 
   useEffect(() => {
     if (session) {
@@ -66,26 +71,13 @@ const VisitorInsiden: React.FC = () => {
     }
   }, [fetchData, session]);
 
-  const excelExport = data.map((item: any, index: number) => ({
-    No: index + 1,
-    "Nama Insiden": item.title,
-    "Nama Pegawai": item.user_name,
-    "Posisi/Departemen": item.position,
-    "Kategory": item.category,
-    "Status": item.status,
-    "Deskripsi": item.description,
-    "Foto": item.image,
-    "Lokasi Insiden": item.location_name,
-    "Waktu Insiden": item.time_incident,
-    "Saran": item.saran,
-  }));
-
   const paginate = (pageNumber: number) => {
     setPage(pageNumber);
   };
 
   const columns = [
     { key: "no", label: "No" },
+    { key: "area", label: "Area" },
     { key: "title", label: "Nama Insiden" },
     { key: "user_name", label: "Nama Karyawan" },
     { key: "position", label: "Position"},
@@ -98,8 +90,17 @@ const VisitorInsiden: React.FC = () => {
     { key: "image", label: "Image" }, // Tambahkan kolom gambar di sini
   ];
 
-  const renderButtons = (insiden: Insiden) => [    
-    
+  const renderButtons = (insiden: Insiden) => [
+    <DeleteInsiden
+      key={insiden.id_incident}
+      insiden={insiden}
+      onUpdate={fetchData}
+    />,
+    <UpdateIncident
+      key={insiden.id_incident}
+      incident={insiden}
+      onUpdate={fetchData}
+    />,
   ];
 
   const getDataWithRowNumbers = () => {
@@ -113,10 +114,19 @@ const VisitorInsiden: React.FC = () => {
     <Card title="Data Insiden" topMargin="mt-2" TopSideButtons={undefined}>
       <div className="inline-block w-full mb-3">
         <div className="mb-3">
-          <ExportExcel excelData={excelExport} fileName="Data Insiden" title="Data Insiden PT Darya Varia Laboratoria"/>
+          <AddIncident onUpdate={fetchData} />
         </div>
         <div className="flex justify-between items-center w-full">
           <div className="flex items-center gap-3">
+            <select
+              className="select select-bordered select-sm w-full max-w-xs"
+              value={area}
+              onChange={handleAreaChange}
+            >
+              <option value="">Choose Area</option>
+              <option value="citeureup">Citeureup</option>             
+              <option value="gunung putri">Gunung Putri</option>             
+            </select>
             <select
               className="select select-bordered select-sm w-full max-w-xs"
               value={category}
@@ -167,4 +177,4 @@ const VisitorInsiden: React.FC = () => {
   );
 };
 
-export default VisitorInsiden;
+export default KaryawanInsiden;

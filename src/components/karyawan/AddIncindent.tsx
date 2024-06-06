@@ -12,6 +12,7 @@ interface Location {
 }
 
 export default function AddIncident({ onUpdate }: AddIncidentProps) {
+  const [area, setArea] = useState("");
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
@@ -40,6 +41,7 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
     setIsMutating(true);
 
     const formData = new FormData();
+    formData.append("area", area);
     formData.append("title", title);
     formData.append("category", category);
     formData.append("description", description);
@@ -78,6 +80,7 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
       });
       setIsMutating(false);
 
+      setArea("");
       setTitle("");
       setCategory("");
       setDescription("");
@@ -111,6 +114,18 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
           <h3 className="font-bold text-lg">Add Incident</h3>
           <form onSubmit={handleSubmit}>
             <div className="form-control">
+              <label className="label font-bold">Area</label>
+              <select
+                value={area}
+                onChange={(e) => setArea(e.target.value)}
+                className="input w-full input-bordered"
+              >
+                <option value="">Select Area</option>
+                <option value="citeureup">Citeureup</option>
+                <option value="gunung putri">Gunung Putri</option>
+              </select>
+            </div>
+            <div className="form-control">
               <label className="label font-bold">Title</label>
               <input
                 type="text"
@@ -121,7 +136,9 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
               />
             </div>
             <div className="form-control">
-              <label htmlFor="category" className="label font-bold">Category</label>
+              <label htmlFor="category" className="label font-bold">
+                Category
+              </label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
@@ -132,7 +149,7 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
                 <option value="unsafe condition">Unsafe Condition</option>
                 <option value="nearmiss">Nearmiss</option>
               </select>
-            </div>            
+            </div>
             <div className="form-control">
               <label className="label font-bold">Description</label>
               <textarea
@@ -158,6 +175,7 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
                 onChange={(e) => setImage(e.target.files?.[0] || null)}
                 className="input w-full input-bordered"
               />
+              <span className="text-sm text-gray-500">Note: Maximum file size is 2MB.</span>
             </div>
             <div className="form-control">
               <label className="label font-bold">Time Incident</label>
@@ -185,6 +203,9 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
                   </option>
                 ))}
               </select>
+            </div>
+            <div className="mt-4 text-sm text-gray-500">
+              Anda dapat melaporkan kegiatan/kondisi tidak aman melalui SMS ke No. 0800-0000-0000 dengan format: AreaKerja#Nama#Lokasi#Uraian. Contoh: Citeureup#Nice V#Supervisor#Pekerja tidak menggunakan APD
             </div>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>

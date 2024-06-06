@@ -1,14 +1,14 @@
-"use client";
+"use client"
 import { useEffect, useState } from "react";
 import Card from "@/components/Card";
 import { signOut, useSession } from "next-auth/react";
-import { sign } from "crypto";
 
-const Profile:React.FC = () => {
+const Profile: React.FC = () => {
   const { data: session } = useSession();
-  const [initialData, setInitialData] = useState({ name: "", email: "", position: "" });
+  const [initialData, setInitialData] = useState({ name: "", email: "", position: "", no_hp: "", asal: "" });
   const [formData, setFormData] = useState({ ...initialData });
   const [formChanged, setFormChanged] = useState(false);
+  const [role, setRole] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,8 +22,10 @@ const Profile:React.FC = () => {
             },
           });
           const data = await response.json();
+          console.log("Fetched data:", data); // Debugging log
           setInitialData(data.data);
           setFormData(data.data);
+          setRole(data.data.role); // Assuming role is included in the data
         } catch (error) {
           console.error("Error fetching profile data:", error);
           signOut();
@@ -34,7 +36,7 @@ const Profile:React.FC = () => {
     fetchData();
   }, [session]);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -43,9 +45,22 @@ const Profile:React.FC = () => {
     setFormChanged(true);
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
+    console.log("Form data before submission:", formData); // Debugging log
+    try {      
+      // Add required fields if the role is 'karyawan' or 'admin'
+      if (role === 'karyawan' || role === 'admin') {
+        if (formData.asal === null || formData.asal === undefined) {
+          formData.asal = ''; // Convert null or undefined to empty string
+        }
+        if (formData.no_hp === null || formData.no_hp === undefined) {
+          formData.no_hp = ''; // Convert null or undefined to empty string
+        }
+        if (formData.position === null || formData.position === undefined) {
+          formData.position = ''; // Convert null or undefined to empty string
+        }
+      }
       const response = await fetch("https://www.salman4l.my.id/api/profile", {
         method: "PUT",
         headers: {
@@ -55,12 +70,16 @@ const Profile:React.FC = () => {
         body: JSON.stringify(formData),
       });
       const data = await response.json();
+      console.log("Response data after submission:", data); // Debugging log
       setInitialData(data.data);
       setFormChanged(false);
     } catch (error) {
       console.error("Error updating profile data:", error);
     }
   };
+
+  console.log(formData.asal);
+  
 
   const handleCancel = () => {
     setFormData({ ...initialData });
@@ -101,19 +120,54 @@ const Profile:React.FC = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="mt-4 flex flex-col">
-            <label htmlFor="position" className="p-2">
-              Position
-            </label>
-            <input
-              id="position"
-              type="text"
-              name="position"
-              className="p-2 bg-[#eac8fc45] rounded-lg hover:border hover:border-black"
-              value={formData.position}
-              onChange={handleChange}
-            />
-          </div>
+
+          {(role === "karyawan" || role === "visitor") && (
+            <>
+              <div className="mt-4 flex flex-col">
+                <label htmlFor="no_hp" className="p-2">
+                  No HP
+                </label>
+                <input
+                  id="no_hp"
+                  type="text"
+                  name="no_hp"
+                  className="p-2 bg-[#eac8fc45] rounded-lg hover:border hover:border-black"
+                  value={formData.no_hp}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mt-4 flex flex-col">
+                <label htmlFor="position" className="p-2">
+                  Position
+                </label>
+                <input
+                  id="position"
+                  type="text"
+                  name="position"
+                  className="p-2 bg-[#eac8fc45] rounded-lg hover:border hover:border-black"
+                  value={formData.position}
+                  onChange={handleChange}
+                />
+              </div>
+            </>
+          )}
+
+          {role === "visitor" && (
+            <div className="mt-4 flex flex-col">
+              <label htmlFor="asal" className="p-2">
+                Asal
+              </label>
+              <input
+                id="asal"
+                type="text"
+                name="asal"
+                className="p-2 bg-[#eac8fc45] rounded-lg hover:border hover:border-black"
+                value={formData.asal}
+                onChange={handleChange}
+              />
+            </div>
+          )}
+
           <div className="flex justify-end">
             {formChanged && (
               <button
