@@ -9,7 +9,6 @@ import DeleteInsiden from "@/components/admin/DeleteInsiden";
 import UpdateIncident from "@/components/karyawan/UpdateIncident";
 import AddIncident from "@/components/karyawan/AddIncindent";
 
-
 const KaryawanInsiden: React.FC = () => {
   const { data: session } = useSession();
   const [data, setData] = useState<Insiden[]>([]);
@@ -61,7 +60,14 @@ const KaryawanInsiden: React.FC = () => {
         }
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      if (error instanceof Error) {
+        console.error("Error fetching data:", error.message);
+        if (error.message.includes("Unexpected token '<'")) {
+          signOut();
+        }
+      } else {
+        console.error("Error fetching data:", error);
+      }
     }
   }, [search, area, category, status, page, session?.access_token]);
 
@@ -80,7 +86,7 @@ const KaryawanInsiden: React.FC = () => {
     { key: "area", label: "Area" },
     { key: "title", label: "Nama Insiden" },
     { key: "user_name", label: "Nama Karyawan" },
-    { key: "position", label: "Position"},
+    { key: "position", label: "Position" },
     { key: "description", label: "Deskripsi Insiden" },
     { key: "location_name", label: "Lokasi" },
     { key: "time_incident", label: "Tanggal" },
@@ -124,8 +130,8 @@ const KaryawanInsiden: React.FC = () => {
               onChange={handleAreaChange}
             >
               <option value="">Choose Area</option>
-              <option value="citeureup">Citeureup</option>             
-              <option value="gunung putri">Gunung Putri</option>             
+              <option value="citeureup">Citeureup</option>
+              <option value="gunung putri">Gunung Putri</option>
             </select>
             <select
               className="select select-bordered select-sm w-full max-w-xs"

@@ -45,7 +45,14 @@ export default function AdminLokasi() {
         }
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      if (error instanceof Error) {
+        console.error("Error fetching data:", error.message);
+        if (error.message.includes("Unexpected token '<'")) {
+          signOut();
+        }
+      } else {
+        console.error("Error fetching data:", error);
+      }
     }
   }, [search, page, session?.access_token]);
 
