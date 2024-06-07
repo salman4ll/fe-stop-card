@@ -7,6 +7,7 @@ import imageRegis from "@/assets/imageRegis.png";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Spinner, useToast } from "@chakra-ui/react";
+import Head from "next/head";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -103,6 +104,9 @@ export default function Register() {
 
   return (
     <main className="relative h-screen w-full flex flex-col">
+      <Head>
+        <title>Register</title>
+      </Head>
       <div className="fixed top-0 left-0 w-full h-full z-0">
         <Image
           alt="image background"

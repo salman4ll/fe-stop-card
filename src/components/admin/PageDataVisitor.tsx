@@ -7,6 +7,7 @@ import Card from "@/components/Card";
 import { User } from "@/types";
 import VerifyUser from "@/components/admin/VerifyUser";
 import DefaultPagination from "@/components/Pagination";
+import ExportExcel from "../ExportExcel";
 
 export default function AdminVisitor() {
   const { data: session } = useSession();
@@ -53,6 +54,15 @@ export default function AdminVisitor() {
     }
   }, [search, verify, page, session?.access_token]);
 
+  const excelExport = data.map((item: any, index: number) => ({
+    No: index + 1,
+    "Nama Visitor": item.name,
+    "No Hp": item.no_hp,
+    Email: item.email,
+    "Posisi/Jabatan": item.position,
+    Asal: item.asal,
+  }));
+
   useEffect(() => {
     if (session) {
       fetchData();
@@ -69,7 +79,7 @@ export default function AdminVisitor() {
     { key: "name", label: "Name" },
     { key: "email", label: "Email" },
     { key: "role", label: "Role" },
-    { key: "position", label: "Position"},
+    { key: "position", label: "Position" },
     { key: "is_verified", label: "Is Verified" },
   ];
 
@@ -91,6 +101,13 @@ export default function AdminVisitor() {
   return (
     <Card title="Data Visitor" topMargin="mt-2" TopSideButtons={undefined}>
       <div className="inline-block w-full mb-3">
+        <div className="mb-3">
+          <ExportExcel
+            excelData={excelExport}
+            fileName="Data Visitor"
+            title="Data Visitor PT Darya Varia Laboratoria"
+          />
+        </div>
         <div className="flex justify-between items-center w-full">
           <div className="flex items-center">
             <select

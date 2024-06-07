@@ -56,6 +56,7 @@ export default function AdminKaryawan() {
 
   const excelExport = data.map((item: any, index: number) => ({
     No: index + 1,
+    "No Hp": item.no_hp,
     "Nama Pegawai": item.name,
     Email: item.email,
     "Posisi/Jabatan": item.position,

@@ -1,6 +1,8 @@
 
 import react from "react";
 import { Metadata } from "next";
+import Image from "next/image";
+import cardImage from "@/assets/card-image.jpg";
 
 export const metadata: Metadata = {
   title: 'Page Karyawan',
@@ -10,7 +12,106 @@ export const metadata: Metadata = {
 export default function Karyawan() {
   return (
     <>
-      <h1>Hallo</h1>
+      <div className="p-8">
+      <h1 className="text-2xl font-semibold text-[#03428D] mb-4">
+        Sekilas Darya-Varia
+      </h1>
+      <h2 className="text-xl font-semibold text-[#0091CB] mb-2">
+        Membangun Indonesia yang Lebih Sehat
+      </h2>
+      <div className="grid grid-cols-3 gap-4">
+        <div className="col-span-2">
+          <p className="mb-4 text-justify text-[#666666]">
+            PT Darya-Varia Laboratoria Tbk (“Darya-Varia” atau “Perseroan”)
+            adalah perusahaan industri farmasi PMDN (Penanaman Modal Dalam
+            Negeri) yang berdiri pada 1976. Pada November 1994, Darya-Varia
+            mencatatkan sahamnya di Bursa Efek Indonesia (BEI) dengan kode saham
+            DVLA.
+          </p>
+          <p className="mb-4 text-justify text-[#666666]">
+            Pada 1995, Darya-Varia mengakuisisi PT Pradja Pharin (Prafa) dan
+            menjadi entitas induk yang terus mengembangkan sayapnya pada sektor
+            kesehatan di Indonesia. Pada 2014, Perseroan melakukan merger dengan
+            Prafa, yang menggabungkan diri ke dalam Darya-Varia.
+          </p>
+          <p className="mb-4 text-justify text-[#666666]">
+            Saat ini, Darya-Varia mengoperasikan dua pabrik yang telah memenuhi
+            standar internasional Cara Pembuatan Obat yang Baik (CPOB) dan
+            standar Badan Pengawas Obat dan Makanan (BPOM).
+          </p>
+          <p className="mb-4 text-justify text-[#666666]">
+            Produk kapsul gelatin lunak, produk sediaan cair, plester obat,
+            salep, dan krim diproduksi di Pabrik Gunung Putri. Dalam memproduksi
+            produk-produk tersebut, Pabrik Gunung Putri menerapkan Sistem
+            Manajemen Terpadu dan memperoleh sertifikat ISO 9001:2015, ISO
+            14001:2015, ISO 45001:2018 dan ISO 22000:2018.
+          </p>
+          <p className="mb-4 text-justify text-[#666666]">
+            Sedangkan produk injeksi steril dan sediaan padat dalam bentuk
+            tablet dan kapsul diproduksi di Pabrik Citeureup. Pabrik Citeureup
+            juga menerapkan Sistem Manajemen Terpadu dan memperoleh sertifikat
+            ISO 9001:2015, ISO 14001:2015, ISO 45001:2018, dan SNI ISO/IEC
+            17025:2017.
+          </p>
+        </div>
+        <div>
+          <div className="max-w-sm rounded overflow-hidden shadow-lg">
+            <Image src={cardImage} className="w-full" alt="card image" />
+            <div className="px-6 py-4">
+              <div className="font-bold text-xl mb-2">Informasi Umum</div>
+              <p className="text-gray-700 text-base font-medium">
+                Kantor Pusat:{" "}
+                <span className="text-gray-500 font-normal">
+                  Jakarta Indonesia
+                </span>
+              </p>
+              <p className="text-gray-700 text-base font-medium">
+                Bisnis:{" "}
+                <span className="text-gray-500 font-normal">
+                  Industri Farmasi
+                </span>
+              </p>
+              <p className="text-gray-700 text-base font-medium">
+                Jumlah Karyawan:{" "}
+                <span className="text-gray-500 font-normal">
+                  1659 (Data 2022)
+                </span>
+              </p>
+              <p className="text-gray-700 text-base font-medium">
+                Kode IDX:{" "}
+                <span className="text-gray-500 font-normal">DVLA</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="col-span-3">
+          <p className="mb-4 text-justify text-[#666666]">
+            Dalam menjalankan bisnis Toll Manufacturing, Darya-Varia bekerja
+            sama dengan Perusahaan afiliasinya, PT Medifarma Laboratories, di
+            Pabrik Cimanggis Depok. Perseroan telah dipercaya oleh mitra bisnis
+            lokal dan asing baik untuk pasar domestik dan internasional untuk
+            bisnis Ekspor & Toll Manufacturing dan melakukan transfer teknologi,
+            uji coba lab dan pilot, studi stabilitas, pengadaan bahan baku dan
+            kemasan, dan produksi komersial barang jadi yang berkualitas.
+          </p>
+          <p className="mb-4 text-justify text-[#666666]">
+            Darya-Varia selalu memastikan mutu dan keamanan dari setiap
+            produknya, sehingga semua produknya telah bersertifikat halal.
+            Seluruh fasilitas pabrik yang dimiliki Darya-Varia telah menerapkan
+            sistem jaminan halal.
+          </p>
+          <p className="mb-4 text-justify text-[#666666]">
+            Blue Sphere Singapore Pte Ltd (BSSPL) adalah pemilik 92,13% saham
+            Darya-Varia. Selama 46 tahun, Darya-Varia terus bergerak maju untuk
+            memberikan fasilitas kesehatan yang bermutu tinggi. Melalui misi
+            “membangun Indonesia yang lebih sehat setiap orang di setiap waktu”,
+            Darya-Varia selalu berkomitmen untuk menyediakan beragam produk
+            berkualitas dengan strategi yang tepat untuk kesehatan masyarakat
+            Indonesia.
+          </p>
+        </div>
+      </div>
+    </div>
     </>
   )
 }

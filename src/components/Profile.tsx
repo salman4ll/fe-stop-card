@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Card from "@/components/Card";
 import { signOut, useSession } from "next-auth/react";
+import Head from "next/head";
 
 const Profile: React.FC = () => {
   const { data: session } = useSession();
@@ -85,6 +86,9 @@ const Profile: React.FC = () => {
 
   return (
     <div>
+      <Head>
+        <title>Profile</title>
+      </Head>
       <Card title="Profile" topMargin={2} TopSideButtons={undefined}>
         <form onSubmit={handleSubmit}>
           <div className="mt-4 flex flex-col">
