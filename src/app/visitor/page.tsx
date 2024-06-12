@@ -16,8 +16,8 @@ export default function Visitor() {
       <h2 className="text-xl font-semibold text-[#0091CB] mb-2">
         Membangun Indonesia yang Lebih Sehat
       </h2>
-      <div className="grid grid-cols-3 gap-4">
-        <div className="col-span-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="md:col-span-2">
           <p className="mb-4 text-justify text-[#666666]">
             PT Darya-Varia Laboratoria Tbk (“Darya-Varia” atau “Perseroan”)
             adalah perusahaan industri farmasi PMDN (Penanaman Modal Dalam
@@ -51,7 +51,7 @@ export default function Visitor() {
             17025:2017.
           </p>
         </div>
-        <div>
+        <div className="">
           <div className="max-w-sm rounded overflow-hidden shadow-lg">
             <Image src={cardImage} className="w-full" alt="card image" />
             <div className="px-6 py-4">
@@ -81,7 +81,7 @@ export default function Visitor() {
             </div>
           </div>
         </div>
-        <div className="col-span-3">
+        <div className="md:col-span-3">
           <p className="mb-4 text-justify text-[#666666]">
             Dalam menjalankan bisnis Toll Manufacturing, Darya-Varia bekerja
             sama dengan Perusahaan afiliasinya, PT Medifarma Laboratories, di
