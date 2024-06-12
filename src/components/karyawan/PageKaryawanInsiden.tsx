@@ -66,7 +66,14 @@ const KaryawanInsiden: React.FC = () => {
           signOut();
         }
       } else {
-        console.error("Error fetching data:", error);
+        if (error instanceof Error) {
+          console.error("Error fetching data:", error.message);
+          if (error.message.includes("Unexpected token '<'")) {
+            signOut();
+          }
+        } else {
+          console.error("Error fetching data:", error);
+        }
       }
     }
   }, [search, area, category, status, page, session?.access_token]);
