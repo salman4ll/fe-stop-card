@@ -93,7 +93,7 @@ const KaryawanInsiden: React.FC = () => {
     { key: "category", label: "Category" },
     { key: "status", label: "Status" },
     { key: "saran", label: "Saran" },
-    { key: "image", label: "Image" }, // Tambahkan kolom gambar di sini
+    { key: "image", label: "Image" },
   ];
 
   const renderButtons = (insiden: Insiden) => [

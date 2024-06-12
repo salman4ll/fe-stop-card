@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, SyntheticEvent, useEffect } from "react";
+import React, { useState, useEffect, SyntheticEvent } from "react";
 import { useSession } from "next-auth/react";
 import { useToast } from "@chakra-ui/react";
 import { Insiden } from "@/types";
@@ -18,20 +18,32 @@ export default function UpdateIncident({
   incident,
   onUpdate,
 }: UpdateIncidentProps) {
+  const { data: session } = useSession();
+  const toast = useToast();
+  const [locations, setLocations] = useState<Location[]>([]);
+  const [isMutating, setIsMutating] = useState(false);
+  const [modal, setModal] = useState(false);
+
+  // Initialize state with incident data
   const [title, setTitle] = useState(incident.title);
   const [category, setCategory] = useState(incident.category);
   const [description, setDescription] = useState(incident.description);
   const [image, setImage] = useState<File | null>(null);
   const [timeIncident, setTimeIncident] = useState(incident.time_incident);
-  const [locations, setLocations] = useState<Location[]>([]);
   const [selectedLocation, setSelectedLocation] = useState(
     incident.id_location
   );
   const [saran, setSaran] = useState(incident.saran);
-  const [isMutating, setIsMutating] = useState(false);
-  const [modal, setModal] = useState(false);
-  const { data: session } = useSession();
-  const toast = useToast();
+
+  // Update state when incident prop changes
+  useEffect(() => {
+    setTitle(incident.title);
+    setCategory(incident.category);
+    setDescription(incident.description);
+    setTimeIncident(incident.time_incident);
+    setSelectedLocation(incident.id_location);
+    setSaran(incident.saran);
+  }, [incident]);
 
   useEffect(() => {
     async function fetchLocations() {
@@ -44,7 +56,6 @@ export default function UpdateIncident({
 
   async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
-
     setIsMutating(true);
 
     const formData = new FormData();
@@ -70,6 +81,7 @@ export default function UpdateIncident({
     );
 
     const data = await response.json();
+    setIsMutating(false);
     if (data.code !== 200) {
       toast({
         title: "Error",
@@ -78,7 +90,6 @@ export default function UpdateIncident({
         duration: 5000,
         isClosable: true,
       });
-      setIsMutating(false);
     } else {
       toast({
         title: "Success",
@@ -87,16 +98,13 @@ export default function UpdateIncident({
         duration: 5000,
         isClosable: true,
       });
-      setIsMutating(false);
 
-      setTitle("");
-      setCategory("");
-      setDescription("");
+      // Reset form state after successful update
       setImage(null);
-      setTimeIncident("");
-      setSelectedLocation("");
-      setSaran("");
-      onUpdate();  // Pastikan ini dipanggil untuk memperbarui data
+
+      // Update parent component
+      onUpdate();
+      // Close modal
       setModal(false);
     }
   }
@@ -149,7 +157,11 @@ export default function UpdateIncident({
             </div>
             <div className="form-control">
               <label className="label font-bold">Image</label>
-              <input type="file" onChange={(e) => setImage(e.target.files?.[0] || null)} className="" />
+              <input
+                type="file"
+                onChange={(e) => setImage(e.target.files?.[0] || null)}
+                className=""
+              />
             </div>
             <div className="form-control">
               <label className="label font-bold">Time of Incident</label>
