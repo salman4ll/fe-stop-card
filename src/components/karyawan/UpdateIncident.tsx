@@ -9,8 +9,20 @@ interface UpdateIncidentProps {
   incident: Insiden;
   onUpdate: () => void;
 }
+
 interface Location {
   id_location: string;
+  name: string;
+}
+
+interface Category {
+  id_category: string;
+  name: string;
+}
+
+interface TypeReport {
+  id_category: string;
+  id_type_reporting: string;
   name: string;
 }
 
@@ -21,28 +33,40 @@ export default function UpdateIncident({
   const { data: session } = useSession();
   const toast = useToast();
   const [locations, setLocations] = useState<Location[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [typeReports, setTypeReports] = useState<TypeReport[]>([]);
   const [isMutating, setIsMutating] = useState(false);
   const [modal, setModal] = useState(false);
 
-  // Initialize state with incident data
-  const [title, setTitle] = useState(incident.title);
-  const [category, setCategory] = useState(incident.category);
+  const [area, setArea] = useState(incident.area);  
+  const [selectCategory, setSelectCategory] = useState(incident.category);
+  const [customCategory, setCustomCategory] = useState(incident.custom_category);  
+  const [customTypeReport, setCustomTypeReport] = useState(incident.custom_type_reporting);
+  const [selectTypeReport, setSelectTypeReport] = useState(incident.id_category);
+  const [severity, setSeverity] = useState(incident.id_severity);
+  const [selectSeverity, setSelectSeverity] = useState(incident.id_severity);
+  const [likelihood, setLikelihood] = useState(incident.id_likelihood);
+  const [selectLikelihood, setSelectLikelihood] = useState(incident.id_likelihood);
   const [description, setDescription] = useState(incident.description);
   const [image, setImage] = useState<File | null>(null);
   const [timeIncident, setTimeIncident] = useState(incident.time_incident);
-  const [selectedLocation, setSelectedLocation] = useState(
-    incident.id_location
-  );
+  const [selectedLocation, setSelectedLocation] = useState(incident.id_location);
   const [saran, setSaran] = useState(incident.saran);
 
-  // Update state when incident prop changes
   useEffect(() => {
-    setTitle(incident.title);
-    setCategory(incident.category);
+    setArea(incident.area);    
     setDescription(incident.description);
     setTimeIncident(incident.time_incident);
     setSelectedLocation(incident.id_location);
     setSaran(incident.saran);
+    setSelectCategory(incident.id_category);
+    setSelectTypeReport(incident.id_type_reporting);
+    setSeverity(incident.id_severity);
+    setLikelihood(incident.id_likelihood);
+    setCustomCategory(incident.custom_category);
+    setCustomTypeReport(incident.custom_type_reporting);
+    setSelectSeverity(incident.id_severity);
+    setSelectLikelihood(incident.id_likelihood);
   }, [incident]);
 
   useEffect(() => {
@@ -51,16 +75,77 @@ export default function UpdateIncident({
       const data = await response.json();
       setLocations(data.data.data);
     }
+
+    async function fetchLikelihood() {
+      const response = await fetch("https://www.salman4l.my.id/api/likelihood", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.access_token}`,
+        },
+      });
+      const data = await response.json();
+      setLikelihood(data.data.data);
+    }
+
+    async function fetchSeverity() {
+      const response = await fetch("https://www.salman4l.my.id/api/severity", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.access_token}`,
+        },
+      });
+      const data = await response.json();
+      setSeverity(data.data.data);
+    }
+    
+    async function fetchCategories() {
+      const response = await fetch("https://www.salman4l.my.id/api/categories/category", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.access_token}`,
+        },
+      });
+      const data = await response.json();
+      setCategories(data.data.data);
+    }
+    async function fetchTypeReports() {
+      const response = await fetch(`https://www.salman4l.my.id/api/categories/types_reporting?id=${selectCategory}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.access_token}`,
+        },
+      });
+      const data = await response.json();
+      setTypeReports(data.data.data);
+    }
     fetchLocations();
-  }, []);
+    fetchSeverity();
+    fetchLikelihood();
+    
+    fetchCategories();
+    if (selectCategory && selectCategory !== "other") {
+      fetchTypeReports();
+    } else {
+      setTypeReports([]);
+    }
+  }, [selectCategory, session]);
 
   async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
     setIsMutating(true);
 
     const formData = new FormData();
-    formData.append("title", title);
-    formData.append("category", category);
+    formData.append("area", area);
+    formData.append("id_category", selectCategory == "other" ? "" : selectCategory);
+    formData.append("custom_category", selectCategory == "other" ? customCategory : "");
+    formData.append("id_type_reporting", selectTypeReport == "other" ? "" : selectTypeReport);
+    formData.append("custom_type_reporting", selectTypeReport == "other" ? customTypeReport : "");
+    formData.append("id_severity", selectSeverity);
+    formData.append("id_likelihood", selectLikelihood);
     formData.append("description", description);
     if (image) {
       formData.append("image", image);
@@ -69,16 +154,13 @@ export default function UpdateIncident({
     formData.append("id_location", selectedLocation);
     formData.append("saran", saran);
 
-    const response = await fetch(
-      `https://www.salman4l.my.id/api/incidents/${incident.id_incident}`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + session?.access_token,
-        },
-        body: formData,
-      }
-    );
+    const response = await fetch(`https://www.salman4l.my.id/api/incidents/${incident.id_incident}`, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + session?.access_token,
+      },
+      body: formData,
+    });
 
     const data = await response.json();
     setIsMutating(false);
@@ -99,12 +181,9 @@ export default function UpdateIncident({
         isClosable: true,
       });
 
-      // Reset form state after successful update
       setImage(null);
 
-      // Update parent component
       onUpdate();
-      // Close modal
       setModal(false);
     }
   }
@@ -128,24 +207,60 @@ export default function UpdateIncident({
       <div className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">{incident.title}</h3>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>            
             <div className="form-control">
-              <label className="label font-bold">Title</label>
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+              <label htmlFor="category" className="label font-bold">
+                Category
+              </label>
+              <select
+                value={selectCategory}
+                onChange={(e) => setSelectCategory(e.target.value)}
                 className="input w-full input-bordered"
-              />
+              >
+                <option value="">Select Category</option>
+                {categories.map((category: Category) => (
+                  <option key={category.id_category} value={category.id_category}>
+                    {category.name}
+                  </option>
+                ))}
+                <option value="other">Other</option>
+              </select>
+              {selectCategory === "other" && (
+                <input
+                  type="text"
+                  value={customCategory}
+                  onChange={(e) => setCustomCategory(e.target.value)}
+                  className="input w-full input-bordered mt-2"
+                  placeholder="Enter custom category"
+                />
+              )}
             </div>
             <div className="form-control">
-              <label className="label font-bold">Category</label>
-              <input
-                type="text"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="input w-full input-bordered"
-              />
+              <label htmlFor="typeReport" className="label font-bold">
+                Type Report
+              </label>
+              <select
+                value={selectTypeReport}
+                onChange={(e) => setSelectTypeReport(e.target.value)}
+                className="input w-full input-bordered"                
+              >
+                <option value="">Select Type Report</option>
+                {typeReports.map((type: TypeReport) => (
+                  <option key={type.id_type_reporting} value={type.id_type_reporting}>
+                    {type.name}
+                  </option>
+                ))}
+                <option value="other">Other</option>
+              </select>
+              {selectTypeReport === "other" && (
+                <input
+                  type="text"
+                  value={customTypeReport}
+                  onChange={(e) => setCustomTypeReport(e.target.value)}
+                  className="input w-full input-bordered mt-2"
+                  placeholder="Enter custom type report"
+                />
+              )}
             </div>
             <div className="form-control">
               <label className="label font-bold">Description</label>
@@ -180,10 +295,7 @@ export default function UpdateIncident({
                 className="input w-full input-bordered"
               >
                 {locations.map((location: Location) => (
-                  <option
-                    key={location.id_location}
-                    value={location.id_location}
-                  >
+                  <option key={location.id_location} value={location.id_location}>
                     {location.name}
                   </option>
                 ))}

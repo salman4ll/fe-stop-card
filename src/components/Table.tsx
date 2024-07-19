@@ -31,6 +31,19 @@ const Table: React.FC<TableProps> = ({ columns, data, renderButtons }) => {
         </td>
       );
     }
+
+    if (column.key === 'control_measure' && item[column.key]) {
+      return (
+        <td key={columnIndex}>
+          <ol className="list-decimal">
+            {item[column.key].map((measure: string, index: number) => (
+              <li key={index}>{measure}</li>
+            ))}
+          </ol>
+        </td>
+      );
+    }
+
     return <td key={columnIndex}>{item[column.key]}</td>;
   };
 

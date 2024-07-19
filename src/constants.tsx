@@ -26,6 +26,16 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     icon: <Icon icon="clarity:administrator-line" width="24" height="24" />,
   },
   {
+    title: "Data Category",
+    path: "/admin/category",
+    icon: <Icon icon="carbon:category" width="24" height="24" />,
+  },
+  {
+    title: "Data Tipe Laporan",
+    path: "/admin/type-reporting",
+    icon: <Icon icon="carbon:category" width="24" height="24" />,
+  },
+  {
     title: "Data Lokasi",
     path: "/admin/lokasi",
     icon: <Icon icon="mdi:office-building-location-outline" width="24" height="24" />,

@@ -121,6 +121,7 @@ const AdminInsident: React.FC = () => {
       key={insiden.id_incident}
       insiden={insiden}
       onUpdate={fetchData}
+      
     />,
   ];
 

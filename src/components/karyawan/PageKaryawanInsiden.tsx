@@ -7,7 +7,7 @@ import DefaultPagination from "@/components/Pagination";
 import { Insiden } from "@/types";
 import DeleteInsiden from "@/components/admin/DeleteInsiden";
 import UpdateIncident from "@/components/karyawan/UpdateIncident";
-import AddIncident from "@/components/karyawan/AddIncindent";
+import AddIncident from "./AddIncindent";
 
 const KaryawanInsiden: React.FC = () => {
   const { data: session } = useSession();
@@ -35,7 +35,7 @@ const KaryawanInsiden: React.FC = () => {
   const fetchData = useCallback(async () => {
     try {
       const response = await fetch(
-        `https://www.salman4l.my.id/api/incidents/user?category=${category}&status=${status}&search=${search}&page=${page}&area=${area}`,
+        `https://www.salman4l.my.id/api/incidents/user?category=${category}&status=${status}&page=${page}&area=${area}`,
         {
           method: "GET",
           headers: {
@@ -90,14 +90,17 @@ const KaryawanInsiden: React.FC = () => {
 
   const columns = [
     { key: "no", label: "No" },
-    { key: "area", label: "Area" },
-    { key: "title", label: "Nama Insiden" },
+    { key: "area", label: "Area" },    
     { key: "user_name", label: "Nama Karyawan" },
     { key: "position", label: "Position" },
+    { key: "category", label: "Kategori" },
+    { key: "custom_category", label: "Custom Category" },
+    { key: "control_measure", label: "Kontrol Measure", isControlMeasure: true },
+    { key: "type_reporting", label: "Tipe Laporan" },
     { key: "description", label: "Deskripsi Insiden" },
     { key: "location_name", label: "Lokasi" },
     { key: "time_incident", label: "Tanggal" },
-    { key: "category", label: "Category" },
+    { key: "risk_assessment", label: "Risk Assessment" },
     { key: "status", label: "Status" },
     { key: "saran", label: "Saran" },
     { key: "image", label: "Image" },
@@ -109,11 +112,11 @@ const KaryawanInsiden: React.FC = () => {
       insiden={insiden}
       onUpdate={fetchData}
     />,
-    <UpdateIncident
-      key={insiden.id_incident}
-      incident={insiden}
-      onUpdate={fetchData}
-    />,
+    // <UpdateIncident
+    //   key={insiden.id_incident}
+    //   incident={insiden}
+    //   onUpdate={fetchData}
+    // />,
   ];
 
   const getDataWithRowNumbers = () => {
