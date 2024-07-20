@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function Karyawan() {
   return (
     <>
-    <div className="mt-8 gap-4">
+      <div className="mt-8 gap-4">
         <div
           className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4"
           role="alert"
@@ -43,7 +43,7 @@ export default function Karyawan() {
         >
           <p className="font-bold">Likelihood Levels:</p>
           <ul className="list-disc list-inside text-sm">
-            <li>1: Terdapat 1 kejadian setahun (Rare)</li>
+            <li>1: Terdapat &lt; 1 kejadian setahun (Rare)</li>
             <li>2: Terdapat ≥ 1 kejadian dalam setahun (Unlikely)</li>
             <li>3: Terdapat ≥ 1 kejadian dalam sebulan (Possible)</li>
             <li>4: Terdapat ≥ 1 kejadian dalam seminggu (Likely)</li>

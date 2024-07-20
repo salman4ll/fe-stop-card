@@ -199,47 +199,6 @@ const KaryawanInsiden: React.FC = () => {
           paginate={paginate}
         />
       </Card>
-
-      <div className="mt-8 flex flex-row gap-4 justify-end">
-        <div
-          className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4 w-[20%]"
-          role="alert"
-        >
-          <p className="font-bold">Severity Levels:</p>
-          <ul className="list-disc list-inside text-sm">
-            <li>
-              1: Tidak terjadi cedera, kerugian finansial sedikit
-              (Insignificant)
-            </li>
-            <li>2: Cedera ringan, kerugian finansial sedang (Minor)</li>
-            <li>
-              3: Cedera sedang, perlu penanganan medis, kerugian finansial besar
-              (Moderate)
-            </li>
-            <li>
-              4: Cedera berat ≥1 orang, kerugian besar, gangguan produksi
-              (Major)
-            </li>
-            <li>
-              5: Fatal ≥ 1 orang, kerugian sangat besar dan dampak sangat luas,
-              terhentinya seluruh kegiatan (Catastrophic)
-            </li>
-          </ul>
-        </div>
-        <div
-          className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 w-[20%] mb-4"
-          role="alert"
-        >
-          <p className="font-bold">Likelihood Levels:</p>
-          <ul className="list-disc list-inside text-sm">
-            <li>1: Terdapat 1 kejadian setahun (Rare)</li>
-            <li>2: Terdapat ≥ 1 kejadian dalam setahun (Unlikely)</li>
-            <li>3: Terdapat ≥ 1 kejadian dalam sebulan (Possible)</li>
-            <li>4: Terdapat ≥ 1 kejadian dalam seminggu (Likely)</li>
-            <li>5: Terdapat ≥ 1 kejadian dalam sehari (Almost Certain)</li>
-          </ul>
-        </div>
-      </div>
     </>
   );
 };
