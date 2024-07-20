@@ -8,6 +8,7 @@ import { Insiden } from "@/types";
 import DeleteInsiden from "@/components/admin/DeleteInsiden";
 import UpdateStatusInsiden from "@/components/admin/UpdateStatusInsiden";
 import ExportExcel from "../ExportExcel";
+import ShowIncident from "../ShowIncident";
 
 const AdminInsident: React.FC = () => {
   const { data: session } = useSession();
@@ -121,6 +122,7 @@ const AdminInsident: React.FC = () => {
   ];
 
   const renderButtons = (insiden: Insiden) => [
+    <ShowIncident key={insiden.id_incident} incident={insiden} />,
     <DeleteInsiden
       key={insiden.id_incident}
       insiden={insiden}
