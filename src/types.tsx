@@ -63,6 +63,7 @@ export interface Insiden {
   area: string;
   custom_category: string;
   id_type_reporting: string;
+  type_reporting: string;
   custom_type_reporting: string;
   id_severity: string;
   id_likelihood: string;
@@ -71,9 +72,14 @@ export interface Insiden {
   description: string;
   location_name: string;
   time_incident: string;
+  user_name: string;
+  position: string;
+  control_measure: any;
+  risk_assessment: string;
   category: string;
   status: string;
   saran: string;
   image: string;
+  image_url: any;
   keyword: string;
 }

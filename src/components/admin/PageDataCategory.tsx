@@ -23,7 +23,7 @@ export default function AdminCategory() {
   const fetchData = useCallback(async () => {
     try {
       const response = await fetch(
-        `https://www.salman4l.my.id/api/categories/category`,
+        `https://www.salman4l.my.id/api/categories/category?page=${page}&keyword=${search}`,
         {
           method: "GET",
           headers: {
@@ -97,7 +97,7 @@ export default function AdminCategory() {
   };
 
   return (
-    <Card title="Data Lokasi" topMargin="mt-2" TopSideButtons={undefined}>
+    <Card title="Data Kategori" topMargin="mt-2" TopSideButtons={undefined}>
       <div className="inline-block w-full mb-3">
         <div className="flex justify-between items-center w-full">
           <div className="flex items-center">

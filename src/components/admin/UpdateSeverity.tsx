@@ -2,53 +2,44 @@
 import { useState, SyntheticEvent } from "react";
 import { useSession } from "next-auth/react";
 import { useToast } from "@chakra-ui/react";
-import { TypeReporting } from "@/types";
+import { Location, Severity } from "@/types";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
-interface UpdateTypeReportingProps {
-  typeReporting: TypeReporting;
+interface UpdateSeverityProps {
+  severity: Severity;
   onUpdate: () => void;
 }
 
-export default function UpdateTypeReporting({ typeReporting, onUpdate }: UpdateTypeReportingProps) {
-  const [name, setName] = useState(typeReporting.name);
-  const [controlMeasures, setControlMeasures] = useState(typeReporting.control_measure || [""]);
+export default function UpdateSeverity({
+  severity,
+  onUpdate,
+}: UpdateSeverityProps) {
+  const [name, setName] = useState(severity.name);
+  const [value, setValue] = useState(severity.value);
   const [modal, setModal] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
   const { data: session } = useSession();
   const toast = useToast();
-
-  const handleControlMeasureChange = (index: number, value: string) => {
-    const newControlMeasures = [...controlMeasures];
-    newControlMeasures[index] = value;
-    setControlMeasures(newControlMeasures);
-  };
-
-  const addControlMeasure = () => {
-    setControlMeasures([...controlMeasures, ""]);
-  };
-
-  const removeControlMeasure = (index: number) => {
-    const newControlMeasures = controlMeasures.filter((_, i) => i !== index);
-    setControlMeasures(newControlMeasures);
-  };
 
   async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
 
     setIsMutating(true);
 
-    const response = await fetch(`https://www.salman4l.my.id/api/types-reportings/${typeReporting.id_type_reporting}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + session?.access_token,
-      },
-      body: JSON.stringify({
-        name: name,
-        control_measure: controlMeasures.filter(measure => measure !== ""),
-      }),
-    });
+    const response = await fetch(
+      `https://www.salman4l.my.id/api/severity/${severity.id_severity}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer" + session?.access_token,
+        },
+        body: JSON.stringify({
+          name: name,
+          value: value,
+        }),
+      }
+    );
 
     const data = await response.json();
     if (data.code !== 200) {
@@ -70,6 +61,7 @@ export default function UpdateTypeReporting({ typeReporting, onUpdate }: UpdateT
       });
       setIsMutating(false);
 
+      setName("");
       onUpdate();
       setModal(false);
     }
@@ -93,7 +85,7 @@ export default function UpdateTypeReporting({ typeReporting, onUpdate }: UpdateT
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">{typeReporting.name}</h3>
+          <h3 className="font-bold text-lg">{severity.name}</h3>
           <form onSubmit={handleSubmit}>
             <div className="form-control">
               <label className="label font-bold">Name</label>
@@ -102,29 +94,21 @@ export default function UpdateTypeReporting({ typeReporting, onUpdate }: UpdateT
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="input w-full input-bordered"
-                placeholder="Nama Tipe Laporan"
+                placeholder="Nama"
               />
             </div>
+
             <div className="form-control">
-              <label className="label font-bold">Control Measures</label>
-              {controlMeasures.map((measure, index) => (
-                <div key={index} className="flex items-center">
-                  <input
-                    type="text"
-                    value={measure}
-                    onChange={(e) => handleControlMeasureChange(index, e.target.value)}
-                    className="input w-full input-bordered mb-2"
-                    placeholder="Control Measure"
-                  />
-                  <button type="button" className="btn btn-danger ml-2" onClick={() => removeControlMeasure(index)}>
-                    Remove
-                  </button>
-                </div>
-              ))}
-              <button type="button" className="btn btn-primary mt-2" onClick={addControlMeasure}>
-                Add Control Measure
-              </button>
+              <label className="label font-bold">Value</label>
+              <input
+                type="number"
+                value={value}
+                onChange={(e) => setValue(parseInt(e.target.value))}
+                className="input w-full input-bordered"
+                placeholder="Value"
+              />
             </div>
+
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>
                 Close

@@ -36,6 +36,16 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     icon: <Icon icon="carbon:category" width="24" height="24" />,
   },
   {
+    title: "Data Severity",
+    path: "/admin/severity",
+    icon: <Icon icon="mdi:rain-chance-outline" width="24" height="24" />,
+  },
+  {
+    title: "Data Likelihood",
+    path: "/admin/likelihood",
+    icon: <Icon icon="carbon:outlook-severe" width="24" height="24" />,
+  },
+  {
     title: "Data Lokasi",
     path: "/admin/lokasi",
     icon: <Icon icon="mdi:office-building-location-outline" width="24" height="24" />,

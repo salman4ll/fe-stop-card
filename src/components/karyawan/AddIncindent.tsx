@@ -204,6 +204,7 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
       setModal(false);
     }
   }
+  console.log(handleSubmit);
 
   function handleChange() {
     setModal(!modal);

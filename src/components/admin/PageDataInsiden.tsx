@@ -99,16 +99,25 @@ const AdminInsident: React.FC = () => {
   const columns = [
     { key: "no", label: "No" },
     { key: "area", label: "Area" },
-    { key: "title", label: "Nama Insiden" },
     { key: "user_name", label: "Nama Karyawan" },
     { key: "position", label: "Position" },
-    { key: "description", label: "Deskripsi Insiden" },
+    {
+      key: "category",
+      label: "Kategori",
+      render: (row: Insiden) =>
+        row.category === null ? row.custom_category : row.category,
+    },
+    {
+      key: "type_reporting",
+      label: "Tipe Pelaporan",
+      render: (row: Insiden) =>
+        row.type_reporting === null
+          ? row.custom_type_reporting
+          : row.type_reporting,
+    },
     { key: "location_name", label: "Lokasi" },
-    { key: "time_incident", label: "Tanggal" },
-    { key: "category", label: "Category" },
+    { key: "time_incident", label: "Tanggal Insiden" },
     { key: "status", label: "Status" },
-    { key: "saran", label: "Saran" },
-    { key: "image", label: "Image" }, // Tambahkan kolom gambar di sini
   ];
 
   const renderButtons = (insiden: Insiden) => [

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 interface Column {
   key: string;
   label: string;
+  render?: (item: any) => React.ReactNode;
 }
 
 interface TableProps {
@@ -16,6 +17,10 @@ const Table: React.FC<TableProps> = ({ columns, data, renderButtons }) => {
   const [enlarged, setEnlarged] = useState(false);
 
   const renderCell = (item: any, column: Column, columnIndex: number) => {
+    if (column.render) {
+      return <td key={columnIndex}>{column.render(item)}</td>;
+    }
+
     if (column.key === 'image' && item[column.key]) {
       return (
         <td key={columnIndex}>

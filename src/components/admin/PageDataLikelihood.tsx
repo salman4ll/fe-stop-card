@@ -3,14 +3,16 @@ import { useCallback, useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import Table from "@/components/Table";
 import Card from "@/components/Card";
-import { Category, Location, TypeReporting } from "@/types";
+import { Category, Likelihood, Location, Severity, TypeReporting } from "@/types";
 import DefaultPagination from "@/components/Pagination";
-import DeleteCategory from "./DeleteCategory";
-import AddTypeReporting from "./AddTypeReporting";
-import DeleteTypeReporting from "./DeleteTypeReporting";
-import UpdateTypeReporting from "./UpdateTypeReporting";
+import AddSeverity from "./AddSeverity";
+import DeleteSeverity from "./DeleteSeverity";
+import UpdateSeverity from "./UpdateSeverity";
+import DeleteLikelihood from "./DeleteLikelihood";
+import UpdateLikelihood from "./UpdateLikelihood";
+import AddLikelihood from "./AddLikelihood";
 
-export default function AdminTypeReporting() {
+export default function AdminLikelihood() {
   const { data: session } = useSession();
   const [data, setData] = useState<Location[]>([]);
   const [search, setSearch] = useState("");
@@ -21,7 +23,7 @@ export default function AdminTypeReporting() {
   const fetchData = useCallback(async () => {
     try {
       const response = await fetch(
-        `https://www.salman4l.my.id/api/types-reportings?page=${page}&keyword=${search}`,
+        `https://www.salman4l.my.id/api/likelihood?page=${page}&keyword=${search}`,
         {
           method: "GET",
           headers: {
@@ -69,27 +71,18 @@ export default function AdminTypeReporting() {
 
   const columns = [
     { key: "no", label: "No" },
-    { key: "id_category", label: "ID Kategori" },
-    { key: "id_type_reporting", label: "ID Tipe Laporan" },
-    { key: "name", label: "Tipe Laporan" },
-    {
-      key: "control_measure",
-      label: "Tindakan Pengendalian",
-      isControlMeasure: true,
-    },
+    { key: "id_likelihood", label: "ID Likelihood" },
+    { key: "name", label: "Nama" },
+    { key: "value", label: "Nilai" },
   ];
 
-  const renderButtons = (typeReporting: TypeReporting) => [
-    <DeleteTypeReporting
-      key={typeReporting.id_type_reporting}
-      typeReporting={typeReporting}
+  const renderButtons = (likelihood: Likelihood) => [
+    <DeleteLikelihood
+      key={likelihood.id_likelihood}
+      likelihood={likelihood}
       onUpdate={fetchData}
     />,
-    <UpdateTypeReporting
-      key={typeReporting.id_type_reporting}
-      typeReporting={typeReporting}
-      onUpdate={fetchData}
-    />,
+    <UpdateLikelihood key={likelihood.id_likelihood} likelihood={likelihood} onUpdate={fetchData} />,
   ];
 
   const getDataWithRowNumbers = () => {
@@ -100,11 +93,11 @@ export default function AdminTypeReporting() {
   };
 
   return (
-    <Card title="Data Tipe Laporan" topMargin="mt-2" TopSideButtons={undefined}>
+    <Card title="Data Likelihood" topMargin="mt-2" TopSideButtons={undefined}>
       <div className="inline-block w-full mb-3">
         <div className="flex justify-between items-center w-full">
           <div className="flex items-center">
-            <AddTypeReporting title="Tambah " onUpdate={fetchData} />
+            <AddLikelihood title="Tambah " onUpdate={fetchData} />
           </div>
           <div>
             <input
