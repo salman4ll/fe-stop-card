@@ -67,8 +67,7 @@ export default function AdminLokasi() {
   };
 
   const columns = [
-    { key: "no", label: "No" },
-    { key: "id_location", label: "ID Lokasi" },
+    { key: "no", label: "No" },    
     { key: "name", label: "Nama Lokasi" },
   ];
 

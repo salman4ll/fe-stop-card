@@ -67,12 +67,11 @@ export default function AdminAdmin() {
   };
 
   const columns = [
-    { key: "no", label: "No" },
-    { key: "id_user", label: "ID User" },
-    { key: "name", label: "Name" },
+    { key: "no", label: "No" },    
+    { key: "name", label: "Nama" },
     { key: "email", label: "Email" },
     { key: "role", label: "Role" },
-    { key: "is_verified", label: "Is Verified" },
+    { key: "is_verified", label: "Telah Diverifikasi" },
   ];
 
   const renderButtons = (user: User) => [

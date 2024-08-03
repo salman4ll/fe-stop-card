@@ -91,15 +91,15 @@ export default function UpdateCategory({ category, onUpdate }: UpdateCategoryPro
             </div>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>
-                Close
+                Tutup
               </button>
               {!isMutating ? (
                 <button className="btn btn-primary" type="submit">
-                  Update
+                  Simpan
                 </button>
               ) : (
                 <button className="btn btn-loading" type="button">
-                  Update...
+                  Simpan...
                 </button>
               )}
             </div>

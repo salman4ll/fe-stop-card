@@ -141,7 +141,7 @@ const KaryawanInsiden: React.FC = () => {
                 value={area}
                 onChange={handleAreaChange}
               >
-                <option value="">Choose Area</option>
+                <option value="">Pilih Area</option>
                 <option value="citeureup">Citeureup</option>
                 <option value="gunung putri">Gunung Putri</option>
               </select>
@@ -150,7 +150,7 @@ const KaryawanInsiden: React.FC = () => {
                 value={category}
                 onChange={handleCategoryChange}
               >
-                <option value="">Choose Category</option>
+                <option value="">Pilih Kategori</option>
                 <option value="unsafe action">Unsafe Action</option>
                 <option value="unsafe condition">Unsafe Condition</option>
                 <option value="nearmiss">Nearmiss</option>
@@ -160,7 +160,7 @@ const KaryawanInsiden: React.FC = () => {
                 value={status}
                 onChange={handleStatusChange}
               >
-                <option value="">Choose Status</option>
+                <option value="">Pilih Status</option>
                 <option value="pending">Pending</option>
                 <option value="on progress">On Progress</option>
                 <option value="approve">Approve</option>

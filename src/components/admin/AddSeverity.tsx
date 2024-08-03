@@ -82,7 +82,7 @@ export default function AddLokasi({ title, onUpdate }: AddLocationProps) {
           <h3 className="font-bold text-lg">{title}</h3>
           <form onSubmit={handleSubmit}>
             <div className="form-control">
-              <label className="label font-bold">Name</label>
+              <label className="label font-bold">Nama</label>
               <input
                 type="text"
                 value={name}
@@ -92,7 +92,7 @@ export default function AddLokasi({ title, onUpdate }: AddLocationProps) {
               />
             </div>
             <div className="form-control">
-              <label className="label font-bold">Value</label>
+              <label className="label font-bold">Nilai</label>
               <input
                 type="number"
                 value={value}
@@ -103,15 +103,15 @@ export default function AddLokasi({ title, onUpdate }: AddLocationProps) {
             </div>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>
-                Close
+                Tutup
               </button>
               {!isMutating ? (
                 <button className="btn btn-primary" type="submit">
-                  Add
+                  Tambah
                 </button>
               ) : (
                 <button className="btn btn-loading" type="button">
-                  Add...
+                  Tambah...
                 </button>
               )}
             </div>

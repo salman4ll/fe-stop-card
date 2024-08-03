@@ -26,7 +26,12 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     icon: <Icon icon="clarity:administrator-line" width="24" height="24" />,
   },
   {
-    title: "Data Category",
+    title: "Laporan",
+    path: "/admin/insiden",
+    icon: <Icon icon="carbon:event-incident" width="24" height="24" />,
+  },
+  {
+    title: "Data Kategori",
     path: "/admin/category",
     icon: <Icon icon="carbon:category" width="24" height="24" />,
   },
@@ -36,12 +41,12 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     icon: <Icon icon="carbon:category" width="24" height="24" />,
   },
   {
-    title: "Data Severity",
+    title: "Data Keparahan",
     path: "/admin/severity",
     icon: <Icon icon="mdi:rain-chance-outline" width="24" height="24" />,
   },
   {
-    title: "Data Likelihood",
+    title: "Data Kemungkinan",
     path: "/admin/likelihood",
     icon: <Icon icon="carbon:outlook-severe" width="24" height="24" />,
   },
@@ -51,17 +56,12 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     icon: <Icon icon="mdi:office-building-location-outline" width="24" height="24" />,
   },
   {
-    title: "Laporan",
-    path: "/admin/insiden",
-    icon: <Icon icon="carbon:event-incident" width="24" height="24" />,
-  },
-  {
-    title: "Profile",
+    title: "Profil",
     path: "/admin/profile",
     icon: <Icon icon="tdesign:user-setting" width="24" height="24" />,
   },
   {
-    title: <span onClick={() => signOut()}>Logout</span>,
+    title: <span onClick={() => signOut()}>Keluar</span>,
     path: "/",
     icon: <Icon icon="lucide:log-out" width="24" height="24" />,
     onClick: () => {
@@ -81,12 +81,12 @@ export const SIDENAV_ITEMS_USER: SideNavItem[] = [
     icon: <Icon icon="carbon:event-incident" width="24" height="24" />,
   },
   {
-    title: "Profile",
+    title: "Profil",
     path: "/karyawan/profile",
     icon: <Icon icon="tdesign:user-setting" width="24" height="24" />,
   },
   {
-    title: <span onClick={() => signOut()}>Logout</span>,
+    title: <span onClick={() => signOut()}>Keluar</span>,
     path: "/",
     icon: <Icon icon="lucide:log-out" width="24" height="24" />,
     onClick: () => {
@@ -106,12 +106,12 @@ export const SIDENAV_ITEMS_VISITOR: SideNavItem[] = [
     icon: <Icon icon="carbon:event-incident" width="24" height="24" />,
   },
   {
-    title: "Profile",
+    title: "Profil",
     path: "/visitor/profile",
     icon: <Icon icon="tdesign:user-setting" width="24" height="24" />,
   },
   {
-    title: <span onClick={() => signOut()}>Logout</span>,
+    title: <span onClick={() => signOut()}>Keluar</span>,
     path: "/",
     icon: <Icon icon="lucide:log-out" width="24" height="24" />,
     onClick: () => {

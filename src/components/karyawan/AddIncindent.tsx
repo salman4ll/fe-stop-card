@@ -213,7 +213,7 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
   return (
     <div>
       <button className="btn" onClick={handleChange}>
-        Add Incident
+        Tambah Incident
       </button>
       <input
         type="checkbox"
@@ -224,7 +224,7 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Add Incident</h3>
+          <h3 className="font-bold text-lg">Tambah Insiden</h3>
           <form onSubmit={handleSubmit}>
             <div className="form-control">
               <label className="label font-bold">Area</label>
@@ -233,21 +233,21 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
                 onChange={(e) => setArea(e.target.value)}
                 className="input w-full input-bordered"
               >
-                <option value="">Select Area</option>
+                <option value="">Pilih Area</option>
                 <option value="citeureup">Citeureup</option>
                 <option value="gunung putri">Gunung Putri</option>
               </select>
             </div>
             <div className="form-control">
               <label htmlFor="category" className="label font-bold">
-                Category
+                Kategori
               </label>
               <select
                 value={selectCategory}
                 onChange={(e) => setSelectCategory(e.target.value)}
                 className="input w-full input-bordered"
               >
-                <option value="">Select Category</option>
+                <option value="">Pilih Kategori</option>
                 {category.map((category: Category) => (
                   <option
                     key={category.id_category}
@@ -256,7 +256,7 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
                     {category.name}
                   </option>
                 ))}
-                <option value="other">Other</option>
+                <option value="other">Lainnya</option>
               </select>
               {selectCategory === "other" && (
                 <input
@@ -277,7 +277,7 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
                 onChange={(e) => setSelectTypeReport(e.target.value)}
                 className="input w-full input-bordered"                
               >
-                <option value="">Select Tipe Laporan</option>
+                <option value="">Pilih Tipe Laporan</option>
                 {typeReport.map((type: TypeReport) => (
                   <option
                     key={type.id_type_reporting}
@@ -286,7 +286,7 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
                     {type.name}
                   </option>
                 ))}
-                <option value="other">Other</option>
+                <option value="other">Lainnya</option>
               </select>
               {selectTypeReport === "other" && (
                 <input
@@ -300,7 +300,7 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
             </div>
             <div className="form-control">
               <label htmlFor="severity" className="label font-bold">
-                Severity
+                Keparahan
               </label>
               <select
                 value={selectedSeverity}
@@ -317,7 +317,7 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
             </div>
             <div className="form-control">
               <label htmlFor="likelihood" className="label font-bold">
-                Likelihood
+                Kemungkinan
               </label>
               <select
                 value={selectedLikelihood}
@@ -334,18 +334,18 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
             </div>
             <div className="form-control">
               <label htmlFor="description" className="label font-bold">
-                Description
+                Deskripsi
               </label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className="textarea textarea-bordered"
-                placeholder="Enter description"
+                placeholder="Masukkan Deskripsi"
               ></textarea>
             </div>
             <div className="form-control">
               <label htmlFor="image" className="label font-bold">
-                Image
+                Gambar/Foto
               </label>
               <input
                 type="file"
@@ -357,7 +357,7 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
             </div>
             <div className="form-control">
               <label htmlFor="timeIncident" className="label font-bold">
-                Time Incident
+                Waktu Insiden
               </label>
               <input
                 type="datetime-local"
@@ -368,14 +368,14 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
             </div>
             <div className="form-control">
               <label htmlFor="location" className="label font-bold">
-                Location
+                Lokasi
               </label>
               <select
                 value={selectedLocation}
                 onChange={(e) => setSelectedLocation(e.target.value)}
                 className="input w-full input-bordered"
               >
-                <option value="">Select Location</option>
+                <option value="">Pilih Lokasi</option>
                 {locations.map((location: Location) => (
                   <option key={location.id_location} value={location.id_location}>
                     {location.name}
@@ -396,7 +396,7 @@ export default function AddIncident({ onUpdate }: AddIncidentProps) {
             </div>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>
-                Close
+                Tutup
               </button>
               <button type="submit" className="btn btn-primary">
                 {isMutating ? "Saving..." : "Save"}

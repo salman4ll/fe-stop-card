@@ -93,10 +93,10 @@ export default function UpdateTypeReporting({ typeReporting, onUpdate }: UpdateT
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">{typeReporting.name}</h3>
+          <h3 className="font-bold text-lg">Edit {typeReporting.name}</h3>
           <form onSubmit={handleSubmit}>
             <div className="form-control">
-              <label className="label font-bold">Name</label>
+              <label className="label font-bold">Nama</label>
               <input
                 type="text"
                 value={name}
@@ -106,7 +106,7 @@ export default function UpdateTypeReporting({ typeReporting, onUpdate }: UpdateT
               />
             </div>
             <div className="form-control">
-              <label className="label font-bold">Control Measures</label>
+              <label className="label font-bold">Tindakan Pengendalian</label>
               {controlMeasures.map((measure, index) => (
                 <div key={index} className="flex items-center">
                   <input
@@ -117,25 +117,25 @@ export default function UpdateTypeReporting({ typeReporting, onUpdate }: UpdateT
                     placeholder="Control Measure"
                   />
                   <button type="button" className="btn btn-danger ml-2" onClick={() => removeControlMeasure(index)}>
-                    Remove
+                    Hapus
                   </button>
                 </div>
               ))}
               <button type="button" className="btn btn-primary mt-2" onClick={addControlMeasure}>
-                Add Control Measure
+                Tambah Tindakan Pengendalian
               </button>
             </div>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>
-                Close
+                Tutup
               </button>
               {!isMutating ? (
                 <button className="btn btn-primary" type="submit">
-                  Update
+                  Simpan
                 </button>
               ) : (
                 <button className="btn btn-loading" type="button">
-                  Update...
+                  Simpan...
                 </button>
               )}
             </div>

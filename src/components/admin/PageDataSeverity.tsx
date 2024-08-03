@@ -72,7 +72,6 @@ export default function AdminSeverity() {
 
   const columns = [
     { key: "no", label: "No" },
-    { key: "id_severity", label: "ID Severity" },
     { key: "name", label: "Nama" },
     { key: "value", label: "Nilai" },
   ];

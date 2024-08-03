@@ -49,6 +49,10 @@ const Table: React.FC<TableProps> = ({ columns, data, renderButtons }) => {
       );
     }
 
+    if (column.key === 'is_verified') {
+      return <td key={columnIndex}>{item[column.key] === 1 ? 'Terverifikasi' : 'Tidak Terverifikasi'}</td>;
+    }
+
     return <td key={columnIndex}>{item[column.key]}</td>;
   };
 

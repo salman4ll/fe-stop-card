@@ -81,13 +81,12 @@ export default function AdminVisitor() {
   };
 
   const columns = [
-    { key: "no", label: "No" },
-    { key: "id_user", label: "ID User" },
+    { key: "no", label: "No" },    
     { key: "name", label: "Name" },
     { key: "email", label: "Email" },
     { key: "role", label: "Role" },
     { key: "position", label: "Position" },
-    { key: "is_verified", label: "Is Verified" },
+    { key: "is_verified", label: "Telah Diverifikasi" },
   ];
 
   const renderButtons = (user: User) => [

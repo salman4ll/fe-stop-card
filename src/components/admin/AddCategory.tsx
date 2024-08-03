@@ -89,15 +89,15 @@ export default function AddCategory({ title, onUpdate }: AddCategoryProps) {
             </div>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>
-                Close
+                Tutup
               </button>
               {!isMutating ? (
                 <button className="btn btn-primary" type="submit">
-                  Add
+                  Tambah
                 </button>
               ) : (
                 <button className="btn btn-loading" type="button">
-                  Add...
+                  Tambah...
                 </button>
               )}
             </div>

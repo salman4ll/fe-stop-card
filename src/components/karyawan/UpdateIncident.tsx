@@ -206,11 +206,11 @@ export default function UpdateIncident({
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">{incident.title}</h3>
+          <h3 className="font-bold text-lg">Edit {incident.title}</h3>
           <form onSubmit={handleSubmit}>            
             <div className="form-control">
               <label htmlFor="category" className="label font-bold">
-                Category
+                Kategori
               </label>
               <select
                 value={selectCategory}

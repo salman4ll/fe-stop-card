@@ -64,7 +64,7 @@ const Chart: React.FC = () => {
       },
     },
     yaxis: {
-      max: 5
+      max: 15
     }
   };
 

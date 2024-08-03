@@ -53,11 +53,11 @@ export default function DeleteSeverity({
         <div className="modal">
           <div className="modal-box">
             <h3 className="font-bold text-lg">
-              Are you sure you want to delete {severity.name}?
+              Apakah Anda yakin ingin menghapus {severity.name}?
             </h3>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>
-                Close
+                Tutup
               </button>
               {!isMutating ? (
                 <button
@@ -65,11 +65,11 @@ export default function DeleteSeverity({
                   onClick={() => handleDelete(severity.id_severity)}
                   type="button"
                 >
-                  Delete
+                  Hapus
                 </button>
               ) : (
                 <button className="btn btn-loading" type="button">
-                  Deleting...
+                  Hapus...
                 </button>
               )}
             </div>

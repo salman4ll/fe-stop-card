@@ -73,7 +73,7 @@ const ExportExcel = ({ excelData, fileName, title }: { excelData: any; fileName:
 
     return (
         <button className='btn' onClick={exportToExcel}>
-            Export to Excel
+            Ekspor ke Excel
         </button>
     );
 };

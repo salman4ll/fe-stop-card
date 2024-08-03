@@ -87,7 +87,7 @@ export default function AddAdmin({ title, onUpdate }: AddAdminProps) {
           <h3 className="font-bold text-lg">{title}</h3>
           <form onSubmit={handleSubmit}>
             <div className="form-control">
-              <label className="label font-bold">Name</label>
+              <label className="label font-bold">Nama</label>
               <input
                 type="text"
                 value={name}
@@ -117,7 +117,7 @@ export default function AddAdmin({ title, onUpdate }: AddAdminProps) {
               />
             </div>
             <div className="form-control">
-              <label className="label font-bold">Confirm Password</label>
+              <label className="label font-bold">Konfirmasi Password</label>
               <input
                 type="password"
                 value={passwordConfirmation}
@@ -128,15 +128,15 @@ export default function AddAdmin({ title, onUpdate }: AddAdminProps) {
             </div>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>
-                Close
+                Tutup
               </button>
               {!isMutating ? (
                 <button className="btn btn-primary" type="submit">
-                  Add
+                  Tambah
                 </button>
               ) : (
                 <button className="btn btn-loading" type="button">
-                  Add...
+                  Tambah...
                 </button>
               )}
             </div>

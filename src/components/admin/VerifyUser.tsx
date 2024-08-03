@@ -57,11 +57,11 @@ export default function VerifyUser({ user, onUpdate }: VerifyUserProps) {
         <div className="modal">
           <div className="modal-box">
             <h3 className="font-bold text-lg">
-                Are you sure you want to verify the account {user.name}?
+              Apakah Anda yakin ingin memverifikasi akun {user.name}?
             </h3>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>
-                Close
+                Tutup
               </button>
               {!isMutating ? (
                 <button
@@ -69,11 +69,11 @@ export default function VerifyUser({ user, onUpdate }: VerifyUserProps) {
                   onClick={() => handleVerify(user.id_user)}
                   type="button"
                 >
-                  Verify
+                  Verifikasi
                 </button>
               ) : (
                 <button className="btn btn-loading" type="button">
-                  Verify...
+                  Verifikasi...
                 </button>
               )}
             </div>

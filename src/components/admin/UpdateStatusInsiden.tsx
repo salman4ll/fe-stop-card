@@ -83,7 +83,7 @@ export default function UpdateStatusInsiden({
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">{insiden.title}</h3>
+          <h3 className="font-bold text-lg">Edit {insiden.title}</h3>
           <form onSubmit={handleSubmit}>
             <div className="form-control">
               <label className="label font-bold">Status</label>
@@ -100,15 +100,15 @@ export default function UpdateStatusInsiden({
             </div>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>
-                Close
+                Tutup
               </button>
               {!isMutating ? (
                 <button className="btn btn-primary" type="submit">
-                  Update
+                  Simpan
                 </button>
               ) : (
                 <button className="btn btn-loading" type="button">
-                  Update...
+                  Simpan...
                 </button>
               )}
             </div>

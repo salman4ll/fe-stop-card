@@ -53,11 +53,11 @@ export default function DeleteLikelihood({
         <div className="modal">
           <div className="modal-box">
             <h3 className="font-bold text-lg">
-              Are you sure you want to delete {likelihood.name}?
+              Apakah Anda yakin ingin menghapus {likelihood.name}?
             </h3>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>
-                Close
+                Tutup
               </button>
               {!isMutating ? (
                 <button
@@ -65,11 +65,11 @@ export default function DeleteLikelihood({
                   onClick={() => handleDelete(likelihood.id_likelihood)}
                   type="button"
                 >
-                  Delete
+                  Hapus
                 </button>
               ) : (
                 <button className="btn btn-loading" type="button">
-                  Deleting...
+                  Hapus...
                 </button>
               )}
             </div>

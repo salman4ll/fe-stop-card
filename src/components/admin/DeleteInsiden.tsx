@@ -50,11 +50,11 @@ export default function DeleteInsiden({ insiden, onUpdate }: DeleteInsidenProps)
         <div className="modal">
           <div className="modal-box">
             <h3 className="font-bold text-lg">
-              Are you sure you want to delete {insiden.title}?
+              Apakah Anda yakin ingin menghapus {insiden.title}?
             </h3>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>
-                Close
+                Tutup
               </button>
               {!isMutating ? (
                 <button
@@ -62,11 +62,11 @@ export default function DeleteInsiden({ insiden, onUpdate }: DeleteInsidenProps)
                   onClick={() => handleDelete(insiden.id_incident)}
                   type="button"
                 >
-                  Delete
+                  Hapus
                 </button>
               ) : (
                 <button className="btn btn-loading" type="button">
-                  Deleting...
+                  Hapus...
                 </button>
               )}
             </div>

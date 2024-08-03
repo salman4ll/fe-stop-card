@@ -50,11 +50,11 @@ export default function DeleteLocation({ location, onUpdate }: DeleteLocationPro
         <div className="modal">
           <div className="modal-box">
             <h3 className="font-bold text-lg">
-              Are you sure you want to delete {location.name}?
+              Apakah Anda yakin ingin menghapus {location.name}?
             </h3>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>
-                Close
+                Tutup
               </button>
               {!isMutating ? (
                 <button
@@ -62,11 +62,11 @@ export default function DeleteLocation({ location, onUpdate }: DeleteLocationPro
                   onClick={() => handleDelete(location.id_location)}
                   type="button"
                 >
-                  Delete
+                  Hapus
                 </button>
               ) : (
                 <button className="btn btn-loading" type="button">
-                  Deleting...
+                  Hapus...
                 </button>
               )}
             </div>

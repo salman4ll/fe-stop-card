@@ -69,8 +69,6 @@ export default function AdminTypeReporting() {
 
   const columns = [
     { key: "no", label: "No" },
-    { key: "id_category", label: "ID Kategori" },
-    { key: "id_type_reporting", label: "ID Tipe Laporan" },
     { key: "name", label: "Tipe Laporan" },
     {
       key: "control_measure",

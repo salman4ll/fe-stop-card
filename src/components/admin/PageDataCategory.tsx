@@ -70,8 +70,7 @@ export default function AdminCategory() {
   };
 
   const columns = [
-    { key: "no", label: "No" },
-    { key: "id_category", label: "ID Kategori" },
+    { key: "no", label: "No" },    
     { key: "name", label: "Nama Kategori" },
   ];
 

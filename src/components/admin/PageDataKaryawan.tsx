@@ -80,14 +80,13 @@ export default function AdminKaryawan() {
   };
 
   const columns = [
-    { key: "no", label: "No" },
-    { key: "id_user", label: "ID User" },
-    { key: "name", label: "Name" },
+    { key: "no", label: "No" },    
+    { key: "name", label: "Nama" },
     { key: "position", label: "Posisi"},
     { key: "email", label: "Email" },
     { key: "role", label: "Role" },
     { key: "position", label: "Posisi/Jabatan" },
-    { key: "is_verified", label: "Is Verified" },
+    { key: "is_verified", label: "Telah Diverifikasi" },
   ];
 
   const renderButtons = (user: User) => [
@@ -122,7 +121,7 @@ export default function AdminKaryawan() {
               value={verify}
               onChange={handleVerifyChange}
             >
-              <option value="">Choose selected</option>
+              <option value="">Pilih Status</option>
               <option value="1">Verified</option>
               <option value="0">Unverified</option>
             </select>

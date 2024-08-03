@@ -85,10 +85,10 @@ export default function UpdateSeverity({
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">{severity.name}</h3>
+          <h3 className="font-bold text-lg">Edit {severity.name}</h3>
           <form onSubmit={handleSubmit}>
             <div className="form-control">
-              <label className="label font-bold">Name</label>
+              <label className="label font-bold">Nama</label>
               <input
                 type="text"
                 value={name}
@@ -99,7 +99,7 @@ export default function UpdateSeverity({
             </div>
 
             <div className="form-control">
-              <label className="label font-bold">Value</label>
+              <label className="label font-bold">Nilai</label>
               <input
                 type="number"
                 value={value}
@@ -111,15 +111,15 @@ export default function UpdateSeverity({
 
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>
-                Close
+                Tutup
               </button>
               {!isMutating ? (
                 <button className="btn btn-primary" type="submit">
-                  Update
+                  Simpan
                 </button>
               ) : (
                 <button className="btn btn-loading" type="button">
-                  Update...
+                  Simpan...
                 </button>
               )}
             </div>

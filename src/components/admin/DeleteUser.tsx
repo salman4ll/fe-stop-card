@@ -50,11 +50,11 @@ export default function DeleteUser({ user, onUpdate }: DeleteUserProps) {
         <div className="modal">
           <div className="modal-box">
             <h3 className="font-bold text-lg">
-              Are you sure you want to delete {user.name}?
+              Apakah Anda yakin ingin menghapus {user.name}?
             </h3>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>
-                Close
+                Tutup
               </button>
               {!isMutating ? (
                 <button
@@ -62,11 +62,11 @@ export default function DeleteUser({ user, onUpdate }: DeleteUserProps) {
                   onClick={() => handleDelete(user.id_user)}
                   type="button"
                 >
-                  Delete
+                  Hapus
                 </button>
               ) : (
                 <button className="btn btn-loading" type="button">
-                  Deleting...
+                  Hapus...
                 </button>
               )}
             </div>

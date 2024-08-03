@@ -126,7 +126,7 @@ export default function AddTypeReporting({ title, onUpdate }: AddTypeReportingPr
                 onChange={(e) => setSelectedCategory(e.target.value)}
                 className="input w-full input-bordered"
               >
-                <option value="">Select Category</option>
+                <option value="">Pilih Kategori</option>
                 {category.map((category: Category) => (
                   <option
                     key={category.id_category}
@@ -148,7 +148,7 @@ export default function AddTypeReporting({ title, onUpdate }: AddTypeReportingPr
               />
             </div>
             <div className="form-control">
-              <label className="label font-bold">Control Measures</label>
+              <label className="label font-bold">Tindakan Pengendalian</label>
               {controlMeasures.map((measure, index) => (
                 <div key={index} className="flex items-center">
                   <input
@@ -164,20 +164,20 @@ export default function AddTypeReporting({ title, onUpdate }: AddTypeReportingPr
                 </div>
               ))}
               <button type="button" className="btn btn-primary mt-2" onClick={addControlMeasure}>
-                Add Control Measure
+                Tambah Tindakan Pengendalian
               </button>
             </div>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>
-                Close
+                Tutup
               </button>
               {!isMutating ? (
                 <button className="btn btn-primary" type="submit">
-                  Add
+                  Tambah
                 </button>
               ) : (
                 <button className="btn btn-loading" type="button">
-                  Add...
+                  Tambah...
                 </button>
               )}
             </div>

@@ -70,8 +70,7 @@ export default function AdminLikelihood() {
   };
 
   const columns = [
-    { key: "no", label: "No" },
-    { key: "id_likelihood", label: "ID Likelihood" },
+    { key: "no", label: "No" },    
     { key: "name", label: "Nama" },
     { key: "value", label: "Nilai" },
   ];
