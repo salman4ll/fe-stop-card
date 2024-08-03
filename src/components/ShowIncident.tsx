@@ -98,7 +98,7 @@ export default function ShowIncident({ incident }: ShowIncidentProps) {
           </div>
           <div className="modal-action">
             <button className="btn" onClick={handleChange}>
-              Close
+              Tutup
             </button>
           </div>
         </div>
